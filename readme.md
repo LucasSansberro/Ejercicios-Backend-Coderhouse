@@ -1,0 +1,1 @@
+En este repositorio subiré los ejercicios del curso de Backend en Coderhouse. Las distintas entregas serán separadas en ramas
