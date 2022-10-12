@@ -1,4 +1,3 @@
-En este repositorio subiré los ejercicios del curso de Backend en Coderhouse. Las distintas entregas serán separadas en ramas
-
-💡 Entregas:
-- 1 - [Clases](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-1)
+![Ejercicio redactado](./Pics/entrega-2-imagen-1.png)
+![Ejercicio redactado](./Pics/entrega-2-imagen-2.png)
+<!-- ![Screenshot con resolución](./Pics/entrega-1-imagen-3.png) -->
