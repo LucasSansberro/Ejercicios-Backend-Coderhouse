@@ -42,6 +42,13 @@ class Contenedor {
   }
   getById(id) {
     //Devuelve el objeto con ese id o null, si es que no hay un objeto asociado a tal id
+    try {
+      const previousData = fs.readFileSync(`./${this.archivo}.txt`, "utf-8");
+      const previousDataHolder = JSON.parse(previousData);
+      return previousDataHolder.find((element) => element.id === id) || null;
+    } catch {
+      return "No se ha podido leer el archivo";
+    }
   }
   getAll() {
     //Devuelve un array con todos los objetos del archivo
@@ -55,4 +62,5 @@ class Contenedor {
 }
 
 const lucasTest = new Contenedor("test");
-lucasTest.save({ nombre: "Lucas", apellido: "Pepe" });
+/* lucasTest.save({ nombre: "Lucas", apellido: "Pepe" }); */
+console.log(lucasTest.getById(1));
