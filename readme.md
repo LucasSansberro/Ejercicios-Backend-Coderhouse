@@ -1,3 +1,5 @@
 ![Ejercicio redactado](./Pics/entrega-2-imagen-1.png)
 ![Ejercicio redactado](./Pics/entrega-2-imagen-2.png)
-<!-- ![Screenshot con resolución](./Pics/entrega-1-imagen-3.png) -->
+![Test de método save exitoso](./Pics/entrega-2-imagen-3.png)
+![Test de método getById exitoso](./Pics/entrega-2-imagen-4.png)
+![Test de método getAll exitoso](./Pics/entrega-2-imagen-5.png)
