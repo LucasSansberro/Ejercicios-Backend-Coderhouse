@@ -1,19 +1,43 @@
 const fs = require("fs");
 
-/* class Contenedor {
+class Contenedor {
   constructor(archivo) {
     this.archivo = archivo;
     this.array = [];
   }
-  async save(clave, valor) {
-    //Guardar objeto en el archivo. Devuelve un id asignado (Tiene que ser el index + 1)
-    const texto = { clave: clave, valor: valor };
-    this.array = [...array, { ...texto, id: array.length + 1 }];
-    const json = JSON.stringify(this.array);
+  async save(objeto) {
     try {
-      await fs.promises.writeFile(`./${this.archivo}.txt`, json);
-    } catch (err) {
-      console.log("Hubo un error al agregar el objeto al archivo", err);
+      const previousData = await fs.promises.readFile(
+        `./${this.archivo}.txt`,
+        "utf-8"
+      );
+      const previousDataHolder = JSON.parse(previousData);
+      //Este JSON parse no me termina de convencer. Si es un string entre comillas le hace un split. Para archivos grandes puede ser un problema
+      //Si es un string sin comillas (También entraría acá un objeto sin las llaves de cierre, por ejemplo) simplemente lo sobreescribe
+      //Más allá de eso, la función cumple su cometido y no creo que tenga sentido comerme más la cabeza, siendo que ya estuve varias horas sin poder solucionarlo
+      //Un condicional que haga append arreglaría bastante, pero el ID en el array empeoraría su funcionalidad. Podría solucionarlo con un incrementador++, pero se termina alejando de lo que busco
+      previousDataHolder[0].id == 1
+        ? (this.array = [
+            ...previousDataHolder,
+            { ...objeto, id: previousDataHolder.length + 1 },
+          ])
+        : (array = [
+            { ...previousDataHolder, id: 1 },
+            { ...objeto, id: 2 },
+          ]);
+      const textArray = JSON.stringify(this.array);
+      console.log("Ya existe un archivo con ese nombre. Agregando objeto");
+      try {
+        await fs.promises.writeFile(`./${this.archivo}.txt`, textArray);
+        console.log("El objeto ha sido agregado con éxito");
+      } catch {
+        console.log("Error en la escritura");
+      }
+    } catch {
+      this.array = [{ ...objeto, id: 1 }];
+      const textArray = JSON.stringify(this.array);
+      await fs.promises.writeFile(`./${this.archivo}.txt`, textArray);
+      console.log("Archivo creado con éxito");
     }
   }
   getById(id) {
@@ -28,49 +52,7 @@ const fs = require("fs");
   deleteAll() {
     //Elimina todos los objetos del archivo
   }
-} */
-
-/* const test = new Contenedor("prueba");
-console.log(test);
-test.save("Test", "Test2");
-console.log(test); */
-
-/* let array = [];
-const texto = { nombre: "Pepe", apellido: "Pepardo" };
-array = [...array, { ...texto, id: array.length + 1 }];
-array = [...array, { ...texto, id: array.length + 1 }];
-const json = JSON.stringify(array);
-
-fs.writeFileSync("./test.txt", json);
-const datos = fs.readFileSync("./test.txt", "utf-8");
-console.log(datos); */
-
-async function testLectura() {
-  let array = [];
-  const texto = { nombre: "Pepe", apellido: "Pepardo" };
-  try {
-    const data = await fs.promises.readFile("./test.txt", "utf-8");
-    const test = JSON.parse(data);
-    test[0].id
-      ? (array = [...test, { ...texto, id: test.length + 1 }])
-      : (array = [
-          { ...test, id: 1 },
-          { ...texto, id: 2 },
-        ]);
-    const json = JSON.stringify(array);
-    console.log("Ya existe un archivo con ese nombre. Agregando objeto");
-    try {
-      fs.unlinkSync("./test.txt");
-      fs.writeFileSync("./test.txt", json);
-      console.log("El objeto ha sido agregado con éxito");
-    } catch {
-      console.log("Error en la escritura");
-    }
-  } catch {
-    array = [{ ...texto, id: 1 }];
-    const json = JSON.stringify(array);
-    fs.writeFileSync("./test.txt", json);
-    console.log("Archivo creado con éxito");
-  }
 }
-testLectura();
+
+const lucasTest = new Contenedor("test");
+lucasTest.save({ nombre: "Lucas", apellido: "Pepe" });
