@@ -102,13 +102,13 @@ const productos = new Contenedor("productos");
   thumbnail:
     "https://www.laserenisima.com.ar/images/productos/grandesachet3.png",
 }); */
-/* productos.save({
+/*  productos.save({
   title: "Aceite",
   price: 500,
   thumbnail:
     "https://jumboargentina.vtexassets.com/arquivos/ids/427751/Aceite-De-Girasol-Natura-15-L-1-247928.jpg?v=636495154762100000",
 }); */
-/* productos.save({
+/*  productos.save({
   title: "Manteca",
   price: 200,
   thumbnail:
