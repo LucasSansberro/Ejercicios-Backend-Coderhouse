@@ -94,6 +94,7 @@ class Contenedor {
 }
 
 const productos = new Contenedor("productos");
+module.exports = {Contenedor}
 
 //Prueba de métodos
 /* productos.save({
