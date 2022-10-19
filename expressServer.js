@@ -21,7 +21,7 @@ app.get(`/`, (req, res) => {
 });
 
 app.get(`/productos`, (req, res) => {
-  res.send({ objetos: productos.getAll() });
+  res.send({ Productos: productos.getAll() });
 });
 
 app.get(`/productoRandom`, (req, res) => {
@@ -31,7 +31,7 @@ app.get(`/productoRandom`, (req, res) => {
   const numeroRandom =
     Math.floor(Math.random() * (idList[idList.length - 1] - idList[0] + 1)) +
     idList[0];
-  res.send({ objeto: productos.getById(numeroRandom) });
+  res.send({ Producto: productos.getById(numeroRandom) });
 });
 
 process.on("SIGINT", function () {

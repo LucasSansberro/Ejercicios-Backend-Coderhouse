@@ -25,18 +25,22 @@ class Contenedor {
           { ...objeto, id: 2 },
         ];
       }
-      const textArray = JSON.stringify(this.array);
       console.log("Ya existe un archivo con ese nombre. Agregando objeto");
       try {
-        fs.writeFileSync(`./${this.archivo}.txt`, textArray); //Async o sync? Siento que en este punto no hace diferencia
+        fs.writeFileSync(
+          `./${this.archivo}.txt`,
+          JSON.stringify(this.array, null, 2)
+        ); //Async o sync? Siento que en este punto no hace diferencia
         console.log("El objeto ha sido agregado con éxito");
       } catch {
         console.log("Error en la escritura");
       }
     } catch {
       this.array = [{ ...objeto, id: 1 }];
-      const textArray = JSON.stringify(this.array);
-      fs.writeFileSync(`./${this.archivo}.txt`, textArray);
+      fs.writeFileSync(
+        `./${this.archivo}.txt`,
+        JSON.stringify(this.array, null, 2)
+      );
       console.log("Archivo creado con éxito");
     }
   }
@@ -68,8 +72,10 @@ class Contenedor {
         const filteredArray = previousDataHolder.filter(
           (element) => element.id !== id
         );
-        const textArray = JSON.stringify(filteredArray);
-        fs.writeFileSync(`./${this.archivo}.txt`, textArray);
+        fs.writeFileSync(
+          `./${this.archivo}.txt`,
+          JSON.stringify(filteredArray, null, 2)
+        );
         console.log("El objeto ha sido removido con éxito");
       } else {
         console.log("No se ha encontrado un objeto con ese ID");
@@ -94,10 +100,10 @@ class Contenedor {
 }
 
 const productos = new Contenedor("productos");
-module.exports = {Contenedor}
+module.exports = { Contenedor };
 
 //Prueba de métodos
-/* productos.save({
+/*  productos.save({
   title: "Leche",
   price: 200,
   thumbnail:
@@ -108,8 +114,8 @@ module.exports = {Contenedor}
   price: 500,
   thumbnail:
     "https://jumboargentina.vtexassets.com/arquivos/ids/427751/Aceite-De-Girasol-Natura-15-L-1-247928.jpg?v=636495154762100000",
-}); */
-/*  productos.save({
+});  */
+ /* productos.save({
   title: "Manteca",
   price: 200,
   thumbnail:
@@ -119,4 +125,4 @@ module.exports = {Contenedor}
 console.log(productos.getById(15)); */
 /* console.log(productos.getAll()); */
 /* productos.deleteById(3) */
-/* productos.deleteAll(); */
+/* productos.deleteAll();  */

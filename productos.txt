@@ -1,1 +1,26 @@
-[{"title":"Leche","price":200,"thumbnail":"https://www.laserenisima.com.ar/images/productos/grandesachet3.png","id":1},{"title":"Aceite","price":500,"thumbnail":"https://jumboargentina.vtexassets.com/arquivos/ids/427751/Aceite-De-Girasol-Natura-15-L-1-247928.jpg?v=636495154762100000","id":2},{"title":"Manteca","price":200,"thumbnail":"https://carrefourar.vtexassets.com/arquivos/ids/181159/7790398100088_02.jpg?v=637468586717300000","id":3}]
+[
+  {
+    "title": "Leche",
+    "price": 200,
+    "thumbnail": "https://www.laserenisima.com.ar/images/productos/grandesachet3.png",
+    "id": 1
+  },
+  {
+    "title": "Leche",
+    "price": 200,
+    "thumbnail": "https://www.laserenisima.com.ar/images/productos/grandesachet3.png",
+    "id": 2
+  },
+  {
+    "title": "Aceite",
+    "price": 500,
+    "thumbnail": "https://jumboargentina.vtexassets.com/arquivos/ids/427751/Aceite-De-Girasol-Natura-15-L-1-247928.jpg?v=636495154762100000",
+    "id": 3
+  },
+  {
+    "title": "Manteca",
+    "price": 200,
+    "thumbnail": "https://carrefourar.vtexassets.com/arquivos/ids/181159/7790398100088_02.jpg?v=637468586717300000",
+    "id": 4
+  }
+]
