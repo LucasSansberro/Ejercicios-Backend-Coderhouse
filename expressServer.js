@@ -4,8 +4,14 @@ const productos = new contenedor.Contenedor("productos");
 
 //Servidor Express
 const express = require("express");
+const { Router } = express;
+const multer = require("multer");
 const app = express();
+const routerProductos = Router();
 const PORT = 8080;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
@@ -13,25 +19,55 @@ const server = app.listen(PORT, () => {
 
 server.on("Error", (error) => console.log(`Error en servidor ${error}`));
 
+app.use("/api/productos", routerProductos);
+
 app.get(`/`, (req, res) => {
-  res.send({
-    mensaje:
-      "Escriba /productos luego de localhost:8080 para ver una lista con todos los productos. Escriba /productoRandom para ver un producto al azar",
-  });
+  res.send(
+    `<h1>Escriba api/productos luego de localhost:8080 para ingresar a la API. Escriba /formulario para agregar un producto</h1>`
+  );
 });
 
-app.get(`/productos`, (req, res) => {
+app.get(`/formulario`, (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname +
+        "-" +
+        Date.now() +
+        "." +
+        file.originalname.split(".").pop()
+    );
+  },
+});
+const upload = multer({ storage: storage });
+
+app.post(`/uploadFile`, upload.single("thumbnail"), (req, res) => {
+  const title = req.body.title;
+  const price = req.body.price;
+  const thumbnail = req.file;
+  productos.save({
+    title: title,
+    price: price,
+    thumbnail: `/uploads/${thumbnail.filename}`,
+  });
+  res.send(`<h1> El objeto ha sido agregado con éxito </h1>`);
+});
+
+routerProductos.get(`/`, (req, res) => {
   res.send({ Productos: productos.getAll() });
 });
 
-app.get(`/productoRandom`, (req, res) => {
-  //Debido a que contenedor.js está creado para poder recibir arrays de objetos cuyos ID no comiencen con 1, hace falta
-  //una iteración  que recoja los ID y cree un número random en base a ellos
-  const idList = productos.getAll().map((e) => e.id);
-  const numeroRandom =
-    Math.floor(Math.random() * (idList[idList.length - 1] - idList[0] + 1)) +
-    idList[0];
-  res.send({ Producto: productos.getById(numeroRandom) });
+routerProductos.get(`/:id`, (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  res.send({ Productos: productos.getAll() });
 });
 
 process.on("SIGINT", function () {
