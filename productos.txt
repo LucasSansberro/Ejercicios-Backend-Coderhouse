@@ -22,5 +22,11 @@
     "price": 200,
     "thumbnail": "https://carrefourar.vtexassets.com/arquivos/ids/181159/7790398100088_02.jpg?v=637468586717300000",
     "id": 4
+  },
+  {
+    "title": "Gato",
+    "price": "12",
+    "thumbnail": "/uploads/thumbnail-1667346448456.jpg",
+    "id": 5
   }
 ]
