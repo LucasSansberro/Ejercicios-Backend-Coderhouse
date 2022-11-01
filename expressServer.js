@@ -4,10 +4,9 @@ const productos = new contenedor.Contenedor("productos");
 
 //Servidor Express
 const express = require("express");
-const { Router } = express;
 const multer = require("multer");
 const app = express();
-const routerProductos = Router();
+const routerProductos = express.Router();
 const PORT = 8080;
 
 app.use(express.json());
@@ -64,10 +63,36 @@ routerProductos.get(`/`, (req, res) => {
   res.send({ Productos: productos.getAll() });
 });
 
-routerProductos.get(`/:id`, (req, res) => {
+routerProductos.post(`/`, (req, res) => {
+  console.log("Post recibido");
+  productos.save(req.body);
+  res.send(`El objeto ha sido agregado con éxito`);
+});
+
+routerProductos.put("/:id", (req, res) => {
   const { id } = req.params;
-  console.log(id);
-  res.send({ Productos: productos.getAll() });
+  productos.editById(id, req.body);
+  const producto = productos.getById(id);
+  producto != null
+    ? res.send(`El producto ha sido editado con éxito`)
+    : res.send({ error: "Producto no encontrado" });
+});
+
+routerProductos.get("/:id", (req, res) => {
+  const { id } = req.params;
+  const producto = productos.getById(id);
+  producto != null
+    ? res.send({ Producto: producto })
+    : res.send({ error: "Producto no encontrado" });
+});
+
+routerProductos.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  productos.deleteById(id);
+  const producto = productos.getById(id);
+  producto != null
+    ? res.send(`El producto ha sido removido con éxito`)
+    : res.send({ error: "Producto no encontrado" });
 });
 
 process.on("SIGINT", function () {
