@@ -1,9 +1,9 @@
-# Entrega 4
+# Entrega 5
 
-![Ejercicio redactado](./Pics/entrega-4-imagen-1.png)
-![Ejercicio redactado](./Pics/entrega-4-imagen-2.png)
-![Ejercicio redactado](./Pics/entrega-4-imagen-3.png)
-![Ejemplo de GET api/productos](./Pics/entrega-4-imagen-4.png)
+![Ejercicio redactado](./Pics/entrega-5-imagen-1.png)
+![Ejercicio redactado](./Pics/entrega-5-imagen-2.png)
+![Ejercicio redactado](./Pics/entrega-5-imagen-3.png)
+<!-- ![Ejemplo de GET api/productos](./Pics/entrega-4-imagen-4.png)
 ![Ejemplo de GET api/productos/:id](./Pics/entrega-4-imagen-5.png)
 ![Ejemplo de POST en Postman](./Pics/entrega-4-imagen-6.png)
-![Ejemplo de POST en formulario](./Pics/entrega-4-imagen-7.png)
+![Ejemplo de POST en formulario](./Pics/entrega-4-imagen-7.png) -->
