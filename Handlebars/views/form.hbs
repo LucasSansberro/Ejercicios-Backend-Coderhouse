@@ -1,0 +1,20 @@
+{{> navbar}}
+<br/>
+
+<form  class="container d-flex flex-column" action="/productos" method="POST" enctype="multipart/form-data">
+      <label for="title">Título</label>
+      <input type="text" name="title" />
+      <br />
+      <label for="price">Precio</label>
+      <input type="number" name="price" />
+      <br />
+      <label for="thumbnail">Thumbnail</label>
+      <input type="file" name="thumbnail" />
+      <br />
+      <input type="submit" value="Agregar producto" />
+      <br />
+    </form>
+
+<br/>
+{{> footer}}
+<br/>

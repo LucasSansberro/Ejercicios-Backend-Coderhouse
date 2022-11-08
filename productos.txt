@@ -26,7 +26,31 @@
   {
     "title": "Gato",
     "price": "12",
-    "thumbnail": "/uploads/thumbnail-1667346448456.jpg",
+    "thumbnail": "thumbnail-1667346448456.jpg",
     "id": 5
+  },
+  {
+    "title": "test",
+    "price": "1",
+    "thumbnail": "thumbnail-1667914759651.jpg",
+    "id": 6
+  },
+  {
+    "title": "test22",
+    "price": "2",
+    "thumbnail": "thumbnail-1667914902286.jpg",
+    "id": 7
+  },
+  {
+    "title": "sdasd",
+    "price": "2",
+    "thumbnail": "thumbnail-1667914925164.jpg",
+    "id": 8
+  },
+  {
+    "title": "HandleForm",
+    "price": "12",
+    "thumbnail": "thumbnail-1667915260896.jpg",
+    "id": 9
   }
 ]
