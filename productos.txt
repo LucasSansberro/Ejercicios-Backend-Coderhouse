@@ -52,5 +52,11 @@
     "price": "12",
     "thumbnail": "thumbnail-1667915260896.jpg",
     "id": 9
+  },
+  {
+    "title": "Testpug",
+    "price": "1244",
+    "thumbnail": "thumbnail-1667921170414.jpg",
+    "id": 10
   }
 ]
