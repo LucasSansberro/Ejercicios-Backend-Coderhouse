@@ -58,5 +58,11 @@
     "price": "1244",
     "thumbnail": "thumbnail-1667921170414.jpg",
     "id": 10
+  },
+  {
+    "title": "EJStest",
+    "price": "13231",
+    "thumbnail": "thumbnail-1667925757635.jfif",
+    "id": 11
   }
 ]

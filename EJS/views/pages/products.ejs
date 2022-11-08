@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <%- include('../partials/navbar'); %>
+    <h1 class="text-center">Listado de productos</h1>
+    <div class="container mt-5 d-flex justify-content-between flex-wrap">
+      <% if(productsExist){ %>
+        <% products.forEach((item)=>{ %>
+          <div class="card m-5" style="width:18rem">
+            <img src="<%=item.thumbnail %>" class="card-img-top"/>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <h5 class="card-title"><%=item.title%></h5>
+              <p class="card-text">Precio: $<%=item.price%> / ID: <%=item.id%></p>
+            </div>  
+          </div>
+      <% })}else{ %>
+        <h1 class="text-center">No se encontraron productos</h1>
+      <%} %>
+    <%- include('../partials/footer'); %> 
+  </body>
+</html>
