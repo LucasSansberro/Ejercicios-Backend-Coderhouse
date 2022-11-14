@@ -1,6 +1,6 @@
 //Carga de clase
-const contenedor = require("../contenedor");
-const productos = new contenedor.Contenedor("../productos");
+const contenedor = require("./contenedor");
+const productos = new contenedor.Contenedor("productos");
 
 //Servidor Express
 const express = require("express");
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 //Multer config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../Pug/views/images");
+    cb(null, "./images");
   },
   filename: (req, file, cb) => {
     cb(
@@ -30,10 +30,21 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-//Pug config
-app.set("view engine", "pug");
-app.set("views", "./views");
-app.use(express.static('views/images'));
+//Handlebars config
+app.set("view engine", "hbs");
+app.set("views", "./Handlebars/views");
+app.use(express.static('./images')); 
+app.engine(
+  "hbs",
+  engine({
+    extname: ".hbs",
+    defaultLayout: "index.hbs",
+    layoutsDir: __dirname + "/Handlebars/views/layout",
+    partialsDir: __dirname + "/Handlebars/views/partials",
+  })
+);
+
+
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
@@ -58,7 +69,7 @@ app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
     price: price,
     thumbnail: `${thumbnail.filename}`,
   });
-  res.redirect("/productos");
+  res.redirect('/productos');
 });
 
 process.on("SIGINT", function () {

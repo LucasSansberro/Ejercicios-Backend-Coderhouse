@@ -1,13 +1,12 @@
 //Carga de clase
-const contenedor = require("../contenedor");
-const productos = new contenedor.Contenedor("../productos");
+const contenedor = require("./contenedor");
+const productos = new contenedor.Contenedor("productos");
 
 //Servidor Express
 const express = require("express");
 const multer = require("multer");
 const app = express();
 const PORT = 8080;
-const { engine } = require("express-handlebars");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 //Multer config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../EJS/views/images");
+    cb(null, "./images");
   },
   filename: (req, file, cb) => {
     cb(
@@ -32,7 +31,8 @@ const upload = multer({ storage: storage });
 
 //Pug config
 app.set("view engine", "ejs");
-app.use(express.static('views/images'));
+app.set("views", "./EJS/views");
+app.use(express.static('./images'));
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
