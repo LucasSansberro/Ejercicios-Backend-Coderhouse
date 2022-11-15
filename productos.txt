@@ -88,5 +88,17 @@
     "price": "500",
     "thumbnail": "thumbnail-1668437028008.jpg",
     "id": 15
+  },
+  {
+    "title": "TestDeSockets",
+    "price": "200",
+    "thumbnail": "thumbnail-1668544227278.png",
+    "id": 16
+  },
+  {
+    "title": "TestDeSockets2",
+    "price": "500",
+    "thumbnail": "thumbnail-1668544321866.png",
+    "id": 17
   }
 ]

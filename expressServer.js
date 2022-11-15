@@ -12,6 +12,10 @@ const { engine } = require("express-handlebars");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//Websocket config
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer);
+
 //Multer config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -32,21 +36,21 @@ const upload = multer({ storage: storage });
 
 //Handlebars config
 app.set("view engine", "hbs");
-app.set("views", "./Handlebars/views");
-app.use(express.static('./images')); 
+app.set("views", ".//views");
+app.use(express.static("./images"));
+app.use(express.static("public"));
 app.engine(
   "hbs",
   engine({
     extname: ".hbs",
     defaultLayout: "index.hbs",
-    layoutsDir: __dirname + "/Handlebars/views/layout",
-    partialsDir: __dirname + "/Handlebars/views/partials",
+    layoutsDir: __dirname + "/views/layout",
+    partialsDir: __dirname + "/views/partials",
   })
 );
 
-
-
-const server = app.listen(PORT, () => {
+//Server HTTP
+const server = httpServer.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
 });
 
@@ -57,7 +61,7 @@ app.get(`/`, (req, res) => {
 });
 
 app.get(`/productos`, (req, res) => {
-  res.render("products", { products: productos.getAll(), productsExist: true });
+  res.render("products", { products: productos.getAll(), productsExist: true })
 });
 
 app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
@@ -69,8 +73,15 @@ app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
     price: price,
     thumbnail: `${thumbnail.filename}`,
   });
-  res.redirect('/productos');
+  res.redirect("/productos");
 });
+
+//Server Websocket
+io.on("connection", (socket) => {
+  console.log("Se ha conectado un usuario");
+  io.sockets.emit("lastProducts", productos.getAll());
+});
+
 
 process.on("SIGINT", function () {
   console.log("\nCerrando servidor");

@@ -14,9 +14,18 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
-    <title>Server con Handlebars</title>
+
+    {{! Handlebars me da problemas usando el script local, así que uso CDN. Debería buscar como arreglarlo }}
+    <script
+      src="https://cdn.socket.io/4.5.3/socket.io.min.js"
+      integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Server Websockets</title>
   </head>
   <body>
     {{{body}}}
+    <script src="socketClient.js"></script>
   </body>
 </html>

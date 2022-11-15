@@ -1,0 +1,27 @@
+{{> navbar}}
+<br/>
+
+<form  class="container d-flex flex-column" action="/productos" method="POST" enctype="multipart/form-data">
+  <label for="title">Título</label>
+  <input type="text" name="title" />
+  <br />
+  <label for="price">Precio</label>
+  <input type="number" name="price" />
+  <br />
+  <label for="thumbnail">Thumbnail</label>
+  <input type="file" name="thumbnail" />
+  <br />
+  <input type="submit" value="Agregar producto" />
+  <br />
+</form>
+
+<div class="container d-flex flex-column justify-content-between border border-4">
+  <h2 class="text-center m-5">Últimos productos agregados</h2>
+  <div id="lastProducts" class="container d-flex justify-content-center justify-content-lg-between flex-wrap ">
+    {{!-- Viene contenido por JS --}}
+  </div>
+</div>
+
+<br/>
+{{> footer}}
+<br/>
