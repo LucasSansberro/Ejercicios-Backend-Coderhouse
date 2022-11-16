@@ -1,0 +1,12 @@
+[
+  {
+    "userEmail": "pepe@pepe.com",
+    "userMsg": "Hola! Todo bien?",
+    "date": "11/16/2022, 12:10:41 PM"
+  },
+  {
+    "userEmail": "carlos@carlos.com",
+    "userMsg": "Qué tal? Todo bien, y vos?",
+    "date": "11/16/2022, 12:10:56 PM"
+  }
+]

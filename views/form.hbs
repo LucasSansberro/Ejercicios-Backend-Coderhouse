@@ -18,8 +18,26 @@
 <div class="container d-flex flex-column justify-content-between border border-4">
   <h2 class="text-center m-5">Últimos productos agregados</h2>
   <div id="lastProducts" class="container d-flex justify-content-center justify-content-lg-between flex-wrap ">
-    {{!-- Viene contenido por JS --}}
+    {{!-- JS InnerHTML --}}
   </div>
+</div>
+
+<div class="container mt-5 border border-4 p-5">
+  <h2 class="text-center">Chat en vivo</h2>
+<form onsubmit="return sendMsg()" class="d-flex justify-content-around p-5">
+  <div>
+    <label for="email">Inserte su correo electrónico</label>
+    <input id="userEmail" type="email" name="email" required />
+  </div>
+   <div>
+    <label for="message">Inserte su mensaje</label>
+    <input id="userMsg" type="text" name="message" required/>
+  </div>
+  <input type="submit" value="Enviar" />
+</form>
+<div id="div-chats" class="container d-flex flex-column border border-2">
+  {{!-- JS InnerHTML --}}
+</div>
 </div>
 
 <br/>

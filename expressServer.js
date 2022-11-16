@@ -1,6 +1,7 @@
 //Carga de clase
 const contenedor = require("./contenedor");
 const productos = new contenedor.Contenedor("productos");
+const fs = require("fs");
 
 //Servidor Express
 const express = require("express");
@@ -56,12 +57,25 @@ const server = httpServer.listen(PORT, () => {
 
 server.on("Error", (error) => console.log(`Error en servidor ${error}`));
 
+let chat = [];
+const readChat = async () => {
+  try {
+    const previousData = await fs.promises.readFile(`./chatLog.txt`, "utf-8");
+    const previousDataHolder = JSON.parse(previousData);
+    chat = [...previousDataHolder];
+    return chat;
+  } catch {
+    return
+  }
+};
+
 app.get(`/`, (req, res) => {
   res.render("form");
+  readChat();
 });
 
 app.get(`/productos`, (req, res) => {
-  res.render("products", { products: productos.getAll(), productsExist: true })
+  res.render("products", { products: productos.getAll(), productsExist: true });
 });
 
 app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
@@ -76,12 +90,26 @@ app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
   res.redirect("/productos");
 });
 
+const saveChat =  () => {
+  try {
+    fs.writeFileSync(`./chatLog.txt`, JSON.stringify(chat, null, 2));
+  } catch {
+    console.log("Error en la escritura");
+  }
+};
+
 //Server Websocket
 io.on("connection", (socket) => {
   console.log("Se ha conectado un usuario");
   io.sockets.emit("lastProducts", productos.getAll());
-});
+  socket.emit("chat", chat);
 
+  socket.on("userMsg", (data) => {
+    chat.push(data);
+    io.sockets.emit("chat", chat);
+    saveChat();
+  });
+});
 
 process.on("SIGINT", function () {
   console.log("\nCerrando servidor");
