@@ -9,12 +9,16 @@ const app = express();
 const routerProductos = express.Router();
 const routerCarrito = express.Router();
 const PORT = process.env.PORT || 8080;
-const { engine } = require("express-handlebars");
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Multer config
-//Considerar borrar
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./images");
@@ -32,26 +36,18 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-//Handlebars config
-app.set("view engine", "hbs");
-app.set("views", "views");
-app.use(express.static(__dirname));
-app.engine(
-  "hbs",
-  engine({
-    extname: ".hbs",
-    defaultLayout: "index.hbs",
-    layoutsDir: __dirname + "/views/layout",
-    partialsDir: __dirname + "/views/partials",
-    helpers: {
-      json: (object) => {
-        return JSON.stringify(object);
-      },
-    },
-  })
-);
-
 //Server HTTP
+
+const admin = true;
+function middleware(req, res, next) {
+  admin
+    ? next()
+    : res.json({
+        error: -1,
+        message: "No tienes los permisos suficientes para realizar esta acción",
+      });
+}
+
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
 });
@@ -62,25 +58,37 @@ app.use("/api/productos", routerProductos);
 app.use("/api/carrito", routerCarrito);
 
 routerProductos.get(`/`, (req, res) => {
-  res.render("products", { products: productos.getAll(), productsExist: true });
+  res.json(productos.getAll());
 });
 
-routerProductos.post(`/`, upload.single("thumbnail"), (req, res) => {
-  const title = req.body.title;
-  const price = req.body.price;
-  const thumbnail = req.body.thumbnail;
-  productos.save({
-    title,
-    price,
-    thumbnail,
-  });
-  res.redirect("/api/productos");
+routerProductos.post(
+  `/`,
+  upload.single("thumbnail"),
+  middleware,
+  (req, res) => {
+    const title = req.body.title;
+    const price = req.body.price;
+    const thumbnail = req.body.thumbnail;
+    productos.save({
+      title,
+      price,
+      thumbnail,
+    });
+  }
+);
+
+routerProductos.put("/:id", middleware, (req, res) => {
+  const { id } = req.params;
+  const test = productos.editById(id, req.body);
+  test == "Error"
+    ? res.json({ error: "ID repetido" })
+    : res.json({ message: "Operation successful" });
 });
 
-routerProductos.delete("/:id", (req, res) => {
+routerProductos.delete("/:id", middleware, (req, res) => {
   const { id } = req.params;
   productos.deleteById(id);
-  res.send({ response: "success" });
+  res.json({ message: "Operation successful" });
 });
 
 process.on("SIGINT", function () {

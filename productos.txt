@@ -7,9 +7,9 @@
   },
   {
     "title": "Leche",
-    "price": 200,
+    "price": "200",
     "thumbnail": "https://www.laserenisima.com.ar/images/productos/grandesachet3.png",
-    "id": 2
+    "id": "2"
   },
   {
     "title": "Aceite",
@@ -19,8 +19,8 @@
   },
   {
     "title": "Manteca",
-    "price": 200,
+    "price": "200",
     "thumbnail": "https://carrefourar.vtexassets.com/arquivos/ids/181159/7790398100088_02.jpg?v=637468586717300000",
-    "id": 4
+    "id": "4"
   }
 ]

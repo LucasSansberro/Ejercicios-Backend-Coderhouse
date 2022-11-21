@@ -63,12 +63,14 @@ class Contenedor {
           .length == 2
       ) {
         console.log("Error. Ya existe un objeto con ese ID");
+        return "Error";
       } else {
         fs.writeFileSync(
           `./${this.archivo}.txt`,
           JSON.stringify(previousDataHolder, null, 2)
         );
         console.log("El objeto ha sido editado con éxito");
+        return "Success";
       }
     }
   }
