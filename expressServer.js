@@ -1,6 +1,7 @@
 //Carga de clase
 const contenedor = require("./contenedor");
 const productos = new contenedor.Contenedor("productos");
+const carrito = new contenedor.Contenedor("carrito");
 
 //Servidor Express
 const express = require("express");
@@ -39,7 +40,7 @@ const upload = multer({ storage: storage });
 //Server HTTP
 
 const admin = true;
-function middleware(req, res, next) {
+const middleware = (req, res, next) => {
   admin
     ? next()
     : res.json({
@@ -101,6 +102,56 @@ routerProductos.put("/:id", middleware, (req, res) => {
 routerProductos.delete("/:id", middleware, (req, res) => {
   const { id } = req.params;
   productos.deleteById(id);
+  res.json({ message: "Operation successful" });
+});
+
+routerCarrito.get("/", (req, res) => {
+  res.json(carrito.getAll());
+});
+
+routerCarrito.post(`/`, upload.single("thumbnail"), async (req, res) => {
+  let timestamp = new Date().toLocaleString();
+  const idNumber = await carrito.save({
+    timestamp,
+    productos: [],
+  });
+  res.json({ id: idNumber });
+});
+
+routerCarrito.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  carrito.deleteById(id);
+  res.json({ message: "Operation successful" });
+});
+
+routerCarrito.get("/:id/productos", (req, res) => {
+  const { id } = req.params;
+  const carro = carrito.getById(id);
+  res.json(carro.productos);
+});
+
+routerCarrito.post("/:id/productos", (req, res) => {
+  const { id } = req.params;
+  const carro = carrito.getById(id);
+  const idCheck = carro.productos.map((producto) => producto.id);
+
+  if (idCheck.includes(req.body.id)) {
+    res.json({ error: "Producto repetido", message: "Error" });
+  } else {
+    carro.productos.push(req.body);
+    carrito.editById(id, carro);
+    res.json({ message: "Operation successful" });
+  }
+});
+
+routerCarrito.delete("/:id/productos/:id_prod", (req, res) => {
+  const { id, id_prod } = req.params;
+  let carro = carrito.getById(id);
+  const filteredCarro = carro.productos.filter(
+    (producto) => producto.id != id_prod
+  );
+  carro.productos = filteredCarro;
+  carrito.editById(id, carro);
   res.json({ message: "Operation successful" });
 });
 

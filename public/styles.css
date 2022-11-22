@@ -1,20 +1,35 @@
 .img-holder {
   position: relative;
-  height:20em
+  height: 20em;
 }
 .img-holder .detailButton {
   position: absolute;
   top: 10px;
   right: 10px;
-  border:none;
-  background-color:transparent
+  border: none;
+  background-color: transparent;
 }
+
 .detailButtonImage {
-  width:35px;
+  width: 35px;
   height: 35px;
 }
 
 .detailImage {
-  width:400px;
+  width: 400px;
   height: 400px;
+}
+
+.my-radio {
+  display: inline-flex !important;
+  flex-direction: column;
+}
+
+.my-radio label {
+  margin-bottom: 25px !important;
+}
+
+.cartProductDeleteButton{
+  border:none;
+  background-color: transparent;
 }

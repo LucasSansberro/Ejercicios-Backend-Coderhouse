@@ -36,18 +36,22 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-lg-5">
               <li class="nav-item me-lg-5">
-                <a
-                  class="nav-link active"
-                  aria-current="productos"
-                  href="#productos"
+                <a class="nav-link" href="/public/products.html#productos"
                   >Productos</a
                 >
               </li>
               <li class="nav-item me-lg-5">
-                <a class="nav-link" href="#formulario">Formulario</a>
+                <a class="nav-link" href="/public/products.html#formulario"
+                  >Formulario</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/public/cart.html">Carrito</a>
+                <a
+                  class="nav-link active"
+                  aria-current="carrito"
+                  href="/public/cart.html"
+                  >Carrito</a
+                >
               </li>
             </ul>
           </div>
@@ -57,49 +61,21 @@
 
     <br />
 
-    <h1 class="text-center" id="productos">Listado de productos</h1>
+    <h1 class="text-center">Carritos</h1>
+    <button
+      type="button"
+      class="btn btn-primary mx-auto mt-5 w-25 d-block"
+      onclick="cartCreate()"
+    >
+      Crear carrito
+    </button>
     <div
       class="container mt-5 d-flex justify-content-between flex-wrap"
-      id="productsContainer"
+      id="cartsContainer"
     >
       <!-- JS Content -->
     </div>
 
-    <br />
-
-    <h1 class="text-center" id="formulario">Agregar un producto</h1>
-    <form
-      class="container d-flex flex-column"
-      action="http://localhost:8080/api/productos"
-      method="POST"
-      enctype="multipart/form-data"
-    >
-      <label for="title">Título</label>
-      <input type="text" name="title" />
-      <br />
-      <label for="description">Descripción</label>
-      <input type="text" name="description" />
-      <br />
-      <label for="code">Código</label>
-      <input type="text" name="code" />
-      <br />
-      <label for="price">Precio</label>
-      <input type="number" name="price" />
-      <br />
-      <label for="stock">Stock</label>
-      <input type="number" name="stock" />
-      <br />
-      <label for="thumbnail">Thumbnail (URL)</label>
-      <input type="text" name="thumbnail" />
-      <br />
-      <input type="submit" value="Agregar producto" />
-      <br />
-    </form>
-
-    <br />
-
-    <br />
-    <br />
     <div class="container">
       <footer
         class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
@@ -112,6 +88,6 @@
       </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/public/products.js"></script>
+    <script src="/public/cart.js"></script>
   </body>
 </html>

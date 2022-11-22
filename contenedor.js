@@ -27,8 +27,11 @@ class Contenedor {
           fs.writeFileSync(
             `./${this.archivo}.txt`,
             JSON.stringify(this.array, null, 2)
-          ); //Async o sync? Siento que en este punto no hace diferencia
+          );
           console.log("El objeto ha sido agregado con éxito");
+          const copiedArray = this.array
+          const copiedArrayLength = copiedArray.length -1
+          return copiedArray[copiedArrayLength].id;
         } catch {
           console.log("Error en la escritura");
         }
@@ -39,6 +42,7 @@ class Contenedor {
           JSON.stringify(this.array, null, 2)
         );
         console.log("Archivo creado con éxito");
+        return 1;
       }
     } else {
       console.log("Solo se aceptan objetos como parametro");
