@@ -14,6 +14,7 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="styles.css" />
     <title>Primera entrega proyecto final</title>
   </head>
   <body>
@@ -26,7 +27,10 @@
     <br />
 
     <h1 class="text-center" id="productos">Listado de productos</h1>
-    <div class="container mt-5 d-flex justify-content-between flex-wrap" id="productsContainer">
+    <div
+      class="container mt-5 d-flex justify-content-between flex-wrap"
+      id="productsContainer"
+    >
       <!-- JS Content -->
     </div>
 
@@ -43,8 +47,17 @@
       <label for="title">Título</label>
       <input type="text" name="title" />
       <br />
+      <label for="description">Descripción</label>
+      <input type="text" name="description" />
+      <br />
+      <label for="code">Código</label>
+      <input type="text" name="code" />
+      <br />
       <label for="price">Precio</label>
       <input type="number" name="price" />
+      <br />
+      <label for="stock">Stock</label>
+      <input type="number" name="stock" />
       <br />
       <label for="thumbnail">Thumbnail (URL)</label>
       <input type="text" name="thumbnail" />

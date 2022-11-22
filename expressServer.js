@@ -61,18 +61,31 @@ routerProductos.get(`/`, (req, res) => {
   res.json(productos.getAll());
 });
 
+routerProductos.get("/:id", (req, res) => {
+  const { id } = req.params;
+  res.json(productos.getById(id));
+});
+
 routerProductos.post(
   `/`,
   upload.single("thumbnail"),
   middleware,
   (req, res) => {
+    let timestamp = new Date().toLocaleString();
     const title = req.body.title;
     const price = req.body.price;
     const thumbnail = req.body.thumbnail;
+    const description = req.body.description;
+    const code = req.body.code;
+    const stock = req.body.stock;
     productos.save({
       title,
+      description,
+      code,
       price,
+      stock,
       thumbnail,
+      timestamp,
     });
   }
 );
