@@ -47,7 +47,7 @@ const middleware = (req, res, next) => {
         error: -1,
         message: "No tienes los permisos suficientes para realizar esta acción",
       });
-}
+};
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
@@ -57,6 +57,10 @@ server.on("Error", (error) => console.log(`Error en servidor ${error}`));
 
 app.use("/api/productos", routerProductos);
 app.use("/api/carrito", routerCarrito);
+
+app.get("*", (req, res) => {
+  res.json({ error: -2, descripcion: "Ruta no implementada" });
+});
 
 routerProductos.get(`/`, (req, res) => {
   res.json(productos.getAll());

@@ -79,12 +79,12 @@ const cartDetail = async (id) => {
   const productsHTML = products
     .map((product) => {
       return `<div class="d-flex justify-content-between bg-light my-2 p-2">
-                <p>${product.title}</p>
-                <p>${product.code}</p>
-                <p>${product.price}</p>
-                <p>${product.stock}</p>
-                <p>${product.id}</p>
-                <button class="cartProductDeleteButton" type="button" onclick="cartProductDelete(${id} , ${product.id})">
+                <p class="w-100">${product.title}</p>
+                <p class="w-100">${product.code}</p>
+                <p class="w-100">${product.price}</p>
+                <p class="w-100">${product.stock}</p>
+                <p class="w-100">${product.id}</p>
+                <button class="cartProductDeleteButton w-100" type="button" onclick="cartProductDelete(${id} , ${product.id})">
                   <img class="detailButtonImage" src="https://cdn-icons-png.flaticon.com/512/17/17047.png"/>
                 </button>
               </div>`;
@@ -92,7 +92,15 @@ const cartDetail = async (id) => {
     .join("");
   Swal.fire({
     title: `Productos`,
-    html: productsHTML,
+    html: `<div class="d-flex justify-content-between bg-light my-2 p-2">
+            <p class="w-100 fw-bold">Nombre</p>
+            <p class="w-100 fw-bold">Código</p>
+            <p class="w-100 fw-bold">Precio</p>
+            <p class="w-100 fw-bold">Cantidad</p>
+            <p class="w-100 fw-bold">ID</p>
+            <p class="w-100 fw-bold">Eliminar</p>
+            </div>
+            ${productsHTML}`,
     confirmButtonText: "Cerrar",
     showCloseButton: true,
     allowOutsideClick: true,
