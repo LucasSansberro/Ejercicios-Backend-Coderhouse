@@ -70,3 +70,7 @@
 ![Ejercicio redactado](./Pics/entrega-7-imagen-6.png)
 
 ![Ejercicio redactado](./Pics/entrega-7-imagen-7.png)
+
+## Prueba con Glitch
+
+![Prueba con Glitch](./Pics/PruebaGlitch.png)

@@ -1,4 +1,5 @@
 const url = "http://localhost:8080/api/productos";
+// Link de Glitch para testear (Recordar que debe "despertarse" si está inactivo) https://entrega-7-coderhouse-backend.glitch.me/api/productos
 const cartUrl = "http://localhost:8080/api/carrito";
 
 const productsCharge = async () => {
