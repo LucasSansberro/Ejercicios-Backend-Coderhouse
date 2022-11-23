@@ -10,3 +10,4 @@ En este repositorio subiré los ejercicios del curso de Backend en Coderhouse. L
 - 4 - [API RESTful](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-4)
 - 5 - [Motores de plantillas](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-5)
 - 6 - [Websockets](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-6)
+- 7 - [Primera entrega proyecto final - Ecommerce Express | FileSystem](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-7)
