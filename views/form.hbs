@@ -3,16 +3,25 @@
 
 <form  class="container d-flex flex-column" action="/productos" method="POST" enctype="multipart/form-data">
   <label for="title">Título</label>
-  <input type="text" name="title" />
-  <br />
-  <label for="price">Precio</label>
-  <input type="number" name="price" />
-  <br />
-  <label for="thumbnail">Thumbnail</label>
-  <input type="file" name="thumbnail" />
-  <br />
-  <input type="submit" value="Agregar producto" />
-  <br />
+      <input type="text" name="title" />
+      <br />
+      <label for="description">Descripción</label>
+      <input type="text" name="description" />
+      <br />
+      <label for="code">Código</label>
+      <input type="text" name="code" />
+      <br />
+      <label for="price">Precio</label>
+      <input type="number" name="price" />
+      <br />
+      <label for="stock">Stock</label>
+      <input type="number" name="stock" />
+      <br />
+      <label for="thumbnail">Thumbnail (URL)</label>
+      <input type="text" name="thumbnail" />
+      <br />
+      <input type="submit" value="Agregar producto" />
+      <br />
 </form>
 
 <div class="container d-flex flex-column justify-content-between border border-4">

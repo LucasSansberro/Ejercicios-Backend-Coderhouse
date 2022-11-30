@@ -1,9 +1,10 @@
-//Carga de clase
-const contenedor = require("./contenedor");
-const productos = new contenedor.Contenedor("productos");
-const fs = require("fs");
+//Container import
+const container = require("./container");
+const chatContainer = require("./containerChat");
+const products = new container.Container("products");
+const chatLog = new chatContainer.Container("chat");
 
-//Servidor Express
+//Express Server
 const express = require("express");
 const multer = require("multer");
 const app = express();
@@ -50,64 +51,52 @@ app.engine(
   })
 );
 
-//Server HTTP
+//HTTP Server
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
 });
 
 server.on("Error", (error) => console.log(`Error en servidor ${error}`));
 
-let chat = [];
-const readChat = async () => {
-  try {
-    const previousData = await fs.promises.readFile(`./chatLog.txt`, "utf-8");
-    const previousDataHolder = JSON.parse(previousData);
-    chat = [...previousDataHolder];
-    return chat;
-  } catch {
-    return
-  }
-};
-
 app.get(`/`, (req, res) => {
   res.render("form");
-  readChat();
 });
 
-app.get(`/productos`, (req, res) => {
-  res.render("products", { products: productos.getAll(), productsExist: true });
+app.get(`/productos`, async (req, res) => {
+  const allProducts = await products.getAll();
+  res.render("products", { products: allProducts, productsExist: true });
 });
 
 app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
+  let timestamp = new Date().toLocaleString();
   const title = req.body.title;
+  const description = req.body.description;
+  const code = req.body.code;
   const price = req.body.price;
-  const thumbnail = req.file;
-  productos.save({
-    title: title,
-    price: price,
-    thumbnail: `${thumbnail.filename}`,
+  const stock = req.body.stock;
+  const thumbnail = req.body.thumbnail;
+  products.save({
+    title,
+    description,
+    code,
+    price,
+    stock,
+    thumbnail,
+    timestamp,
   });
-  res.redirect("/productos");
 });
 
-const saveChat =  () => {
-  try {
-    fs.writeFileSync(`./chatLog.txt`, JSON.stringify(chat, null, 2));
-  } catch {
-    console.log("Error en la escritura");
-  }
-};
-
-//Server Websocket
-io.on("connection", (socket) => {
-  console.log("Se ha conectado un usuario");
-  io.sockets.emit("lastProducts", productos.getAll());
+//Websocket Server
+io.on("connection", async (socket) => {
+  const allProducts = await products.getAll();
+  io.sockets.emit("lastProducts", allProducts);
+  const chat = await chatLog.getAll();
   socket.emit("chat", chat);
 
-  socket.on("userMsg", (data) => {
-    chat.push(data);
+  socket.on("userMsg", async (data) => {
+    await chatLog.save(data);
+    const chat = await chatLog.getAll();
     io.sockets.emit("chat", chat);
-    saveChat();
   });
 });
 
