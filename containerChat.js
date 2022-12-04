@@ -1,5 +1,10 @@
-const { options } = require(`./DB/SQLite/options`);
-const knex = require("knex")(options);
+const knex = require("knex")({
+  client: "sqlite3",
+  connection: {
+    filename: "./DB/SQLite/ecommerce.sqlite",
+  },
+  useNullAsDefault: true,
+});
 
 class Container {
   constructor(table) {

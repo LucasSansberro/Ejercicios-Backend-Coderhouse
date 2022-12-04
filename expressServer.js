@@ -84,6 +84,7 @@ app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
     thumbnail,
     timestamp,
   });
+  return res.redirect('/');
 });
 
 //Websocket Server
