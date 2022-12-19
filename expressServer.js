@@ -1,7 +1,7 @@
 //Carga de clase
-const contenedor = require("./contenedor");
-const productos = new contenedor.Contenedor("productos");
-const carrito = new contenedor.Contenedor("carrito");
+const { resultado } = require("./src/daos/index.js");
+const productos = new resultado.producto();
+const carrito = new resultado.carrito();
 
 //Servidor Express
 const express = require("express");
