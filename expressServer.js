@@ -11,6 +11,7 @@ const routerProductos = express.Router();
 const routerCarrito = express.Router();
 const PORT = process.env.PORT || 8080;
 const cors = require("cors");
+const { response } = require("express");
 app.use(
   cors({
     origin: "*",
@@ -62,13 +63,15 @@ app.get("*", (req, res) => {
   res.json({ error: -2, descripcion: "Ruta no implementada" });
 });
 
-routerProductos.get(`/`, (req, res) => {
-  res.json(productos.getAll());
+routerProductos.get(`/`, async (req, res) => {
+  const data = await productos.getAll();
+  res.json(data);
 });
 
-routerProductos.get("/:id", (req, res) => {
+routerProductos.get("/:id", async (req, res) => {
   const { id } = req.params;
-  res.json(productos.getById(id));
+  const data = await productos.getById(id);
+  res.json(data);
 });
 
 routerProductos.post(
@@ -92,13 +95,14 @@ routerProductos.post(
       thumbnail,
       timestamp,
     });
+    res.json({ message: "Operation successful" });
   }
 );
 
 routerProductos.put("/:id", middleware, (req, res) => {
   const { id } = req.params;
-  const test = productos.editById(id, req.body);
-  test == "Error"
+  const operationCode = productos.editById(id, req.body);
+  operationCode == "Error"
     ? res.json({ error: "ID repetido" })
     : res.json({ message: "Operation successful" });
 });
@@ -109,8 +113,9 @@ routerProductos.delete("/:id", middleware, (req, res) => {
   res.json({ message: "Operation successful" });
 });
 
-routerCarrito.get("/", (req, res) => {
-  res.json(carrito.getAll());
+routerCarrito.get("/", async (req, res) => {
+  const data = await carrito.getAll();
+  res.json(data);
 });
 
 routerCarrito.post(`/`, upload.single("thumbnail"), async (req, res) => {
@@ -128,35 +133,53 @@ routerCarrito.delete("/:id", (req, res) => {
   res.json({ message: "Operation successful" });
 });
 
-routerCarrito.get("/:id/productos", (req, res) => {
+routerCarrito.get("/:id/productos", async (req, res) => {
   const { id } = req.params;
-  const carro = carrito.getById(id);
-  res.json(carro.productos);
+  const carro = await carrito.getById(id);
+  carro.productos == undefined
+    ? res.json(carro[0].productos)
+    : res.json(carro.productos);
 });
 
-routerCarrito.post("/:id/productos", (req, res) => {
+routerCarrito.post("/:id/productos", async (req, res) => {
   const { id } = req.params;
-  const carro = carrito.getById(id);
-  const idCheck = carro.productos.map((producto) => producto.id);
+  const carro = await carrito.getById(id);
 
-  if (idCheck.includes(req.body.id)) {
-    res.json({ error: "Producto repetido", message: "Error" });
+  if (carro.productos == undefined) {
+    carro[0].productos.push(req.body),
+      carrito.editById(id, carro[0]),
+      res.json({ message: "Operation successful" });
   } else {
-    carro.productos.push(req.body);
-    carrito.editById(id, carro);
-    res.json({ message: "Operation successful" });
+    const idCheck = carro.productos.map((producto) => producto.id);
+    if (idCheck.includes(req.body.id)) {
+      res.json({ error: "Producto repetido", message: "Error" });
+    } else {
+      carro.productos.push(req.body);
+      carrito.editById(id, carro);
+      res.json({ message: "Operation successful" });
+    }
   }
 });
 
-routerCarrito.delete("/:id/productos/:id_prod", (req, res) => {
+routerCarrito.delete("/:id/productos/:id_prod", async (req, res) => {
   const { id, id_prod } = req.params;
-  let carro = carrito.getById(id);
-  const filteredCarro = carro.productos.filter(
-    (producto) => producto.id != id_prod
-  );
-  carro.productos = filteredCarro;
-  carrito.editById(id, carro);
-  res.json({ message: "Operation successful" });
+  let carro = await carrito.getById(id);
+
+  if (carro.productos == undefined) {
+    const filteredCarro = carro[0].productos.filter(
+      (producto) => producto.id != id_prod
+    );
+    carro[0].productos = filteredCarro;
+    carrito.editById(id, carro[0]);
+    res.json({ message: "Operation successful" });
+  } else {
+    const filteredCarro = carro.productos.filter(
+      (producto) => producto.id != id_prod
+    );
+    carro.productos = filteredCarro;
+    carrito.editById(id, carro);
+    res.json({ message: "Operation successful" });
+  }
 });
 
 process.on("SIGINT", function () {

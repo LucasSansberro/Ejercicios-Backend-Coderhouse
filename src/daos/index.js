@@ -1,5 +1,7 @@
 const { productoDaosArchivos } = require("./productos/productoDaosArchivos");
 const { carritoDaosArchivos } = require("./carritos/carritoDaosArchivos");
+const { productoDaosMongo } = require("./productos/productoDaosMongo");
+const { carritoDaosMongo } = require("./carritos/carritoDaosMongo");
 
 require("dotenv").config();
 
@@ -12,6 +14,16 @@ const instancias = [
   {
     nombre: carritoDaosArchivos,
     id: "archivo",
+    descripcion: "carrito",
+  },
+  {
+    nombre: productoDaosMongo,
+    id: "mongo",
+    descripcion: "producto",
+  },
+  {
+    nombre: carritoDaosMongo,
+    id: "mongo",
     descripcion: "carrito",
   },
 ];
