@@ -50,7 +50,6 @@ async function connectMG() {
 class Contenedor {
   constructor(collection) {
     this.collection = collection;
-    this.array = [];
   }
   async save(objeto) {
     try {
