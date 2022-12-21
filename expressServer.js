@@ -3,6 +3,7 @@ const container = require("./container");
 const chatContainer = require("./containerChat");
 const products = new container.Container("products");
 const chatLog = new chatContainer.Container("chat");
+const { createNProducts } = require("./faker.js");
 
 //Express Server
 const express = require("express");
@@ -84,7 +85,20 @@ app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
     thumbnail,
     timestamp,
   });
-  return res.redirect('/');
+  return res.redirect("/");
+});
+
+app.get(`/productos-test`, (req, res) => {
+  let productsArray = [];
+  createNProducts(productsArray, 5);
+  res.render("productsRandom", { products: productsArray,productsExist: true  });
+});
+
+app.post(`/productos-test`, upload.single("thumbnail"), (req, res) => {
+  let productsArray = [];
+  createNProducts(productsArray, 5);
+  productsArray.forEach((product) => products.save(product));
+  res.json({ msg: "Products created" });
 });
 
 //Websocket Server
