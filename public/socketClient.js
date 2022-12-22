@@ -1,6 +1,5 @@
 const socket = io();
-socket.on("connect", () => {
-});
+socket.on("connect", () => {});
 
 socket.on("lastProducts", (data) => {
   const lastProducts = [
@@ -24,10 +23,26 @@ socket.on("lastProducts", (data) => {
 });
 
 const sendMsg = () => {
-  const userEmail = document.getElementById("userEmail").value;
-  const userMsg = document.getElementById("userMsg").value;
+  const id = document.getElementById("userEmail").value;
+  const nombre = document.getElementById("userName").value;
+  const apellido = document.getElementById("userLastName").value;
+  const edad = document.getElementById("userAge").value;
+  const alias = document.getElementById("userUser").value;
+  const avatar = document.getElementById("userIcon").value;
+  const text = document.getElementById("userMsg").value;
   let timestamp = new Date().toLocaleString();
-  socket.emit("userMsg", { userEmail, userMsg, timestamp });
+  socket.emit("userMsg", {
+    author: {
+      id,
+      nombre,
+      apellido,
+      edad,
+      alias,
+      avatar,
+    },
+    timestamp,
+    text,
+  });
   document.getElementById("userMsg").value = "";
   return false;
 };
@@ -39,13 +54,15 @@ socket.on("chat", (data) => {
     data.map((message) => {
       divFiller.innerHTML += `<div class="m-3 d-flex justify-content-between">
                               <div>
-                                <span style="color:blue; font-weight:bold">${message.userEmail}</span>
-                                dice: <span style="color:green;font-style:italic"> ${message.userMsg} </span>
+                                <span style="color:blue; font-weight:bold">${message.author.id}</span>
+                                dice: <span style="color:green;font-style:italic"> ${message.text} </span>
                               </div>
                               <div>
+                              <img src=${message.author.avatar} class="me-3" style="height:50px" >
                               <span style="color:brown"> ${message.timestamp} </span>
                               </div>
-                            </div>`;
+                            </div>
+                            <hr>`;
     });
   } catch {
     return;

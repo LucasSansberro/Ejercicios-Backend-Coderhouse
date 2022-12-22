@@ -1,69 +1,112 @@
-const knex = require("knex")({
-  client: "sqlite3",
-  connection: {
-    filename: "./DB/SQLite/ecommerce.sqlite",
+//Creación de schema
+const { Schema, model, connect } = require("mongoose");
+
+const chatSchema = new Schema({
+  author: {
+    id: { type: String },
+    nombre: { type: String, required: true },
+    apellido: { type: String },
+    edad: { type: Number },
+    alias: { type: String },
+    avatar: { type: String },
   },
-  useNullAsDefault: true,
+  text: { type: String },
+  timestamp: { type: String },
 });
+const Chat = model("chat", chatSchema);
 
-class Container {
-  constructor(table) {
-    this.table = table;
+//Conexión a la DB
+async function connectMG() {
+  try {
+    await connect(
+      "mongodb+srv://lucassansberro:YTJjWyrti6fYUtX0@coderhouse-backend.61noa9o.mongodb.net/?retryWrites=true&w=majority",
+      { useNewUrlParser: true }
+    );
+  } catch (e) {
+    console.log(e);
+    throw "Error en la conexión";
   }
+}
 
-  async save(object) {
+//Contenedor
+class Contenedor {
+  constructor(collection) {
+    this.collection = collection;
+  }
+  async save(objeto) {
     try {
-      await knex(this.table).insert(object);
+      await connectMG();
+      const object = new this.collection(objeto);
+      await object.save();
       return "Object saved";
     } catch {
       return "There was an error accessing the Database";
     }
   }
-
-  async editById(id, object) {
+  async editById(id, objeto) {
     try {
-      await knex(this.table).where("id", "=", id).update(object);
+      await connectMG();
+      await this.collection.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: objeto,
+        }
+      );
       return "Object updated";
     } catch {
       ("There was an error accessing the Database");
     }
   }
-
   async getById(id) {
     try {
-      const data = await knex(this.table).where("id", "=", id).select();
+      await connectMG();
+      const data = await this.collection.find({ _id: id });
       return data;
     } catch {
       return "There was an error accessing the Database";
     }
   }
-
   async getAll() {
     try {
-      const data = await knex(this.table).select("*");
+      await connectMG();
+      const data = await this.collection.find({});
       return data;
     } catch {
       return "There was an error accessing the Database";
     }
   }
-
   async deleteById(id) {
     try {
-      await knex(this.table).where("id", "=", id).del();
+      await connectMG();
+      await this.collection.deleteOne({ _id: id });
       return "Object deleted";
     } catch {
       return "There was an error accessing the Database";
     }
   }
-
   async deleteAll() {
     try {
-      knex(this.table).del();
-      return "All content in the table has been removed";
+      await connectMG();
+      await this.collection.deleteMany();
+      return "Objects deleted";
     } catch {
       return "There was an error accessing the Database";
     }
   }
 }
 
-module.exports = { Container };
+const chatLog = new Contenedor(Chat);
+module.exports = { Contenedor, chatLog };
+
+/* test.save({
+  author: {
+    id: "test",
+    nombre: "Test",
+    apellido: "test",
+    edad: 12,
+    alias: "test",
+    avatar: "test",
+  },
+  text: "Test",
+  timestamp: "test",
+}); */

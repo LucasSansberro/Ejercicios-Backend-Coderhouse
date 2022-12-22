@@ -1,9 +1,9 @@
 //Container import
 const container = require("./container");
-const chatContainer = require("./containerChat");
 const products = new container.Container("products");
-const chatLog = new chatContainer.Container("chat");
+const { chatLog } = require("./containerChat");
 const { createNProducts } = require("./faker.js");
+const { normalizeChat } = require("./normalizr.js");
 
 //Express Server
 const express = require("express");
@@ -91,7 +91,10 @@ app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
 app.get(`/productos-test`, (req, res) => {
   let productsArray = [];
   createNProducts(productsArray, 5);
-  res.render("productsRandom", { products: productsArray,productsExist: true  });
+  res.render("productsRandom", {
+    products: productsArray,
+    productsExist: true,
+  });
 });
 
 app.post(`/productos-test`, upload.single("thumbnail"), (req, res) => {
@@ -106,12 +109,14 @@ io.on("connection", async (socket) => {
   const allProducts = await products.getAll();
   io.sockets.emit("lastProducts", allProducts);
   const chat = await chatLog.getAll();
-  socket.emit("chat", chat);
+  const normalizedChat = normalizeChat(chat);
+  socket.emit("chat", chat, normalizedChat);
 
   socket.on("userMsg", async (data) => {
     await chatLog.save(data);
     const chat = await chatLog.getAll();
-    io.sockets.emit("chat", chat);
+    const normalizedChat = normalizeChat(chat);
+    io.sockets.emit("chat", chat, normalizeChat);
   });
 });
 

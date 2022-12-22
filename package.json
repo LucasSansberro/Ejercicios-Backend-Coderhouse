@@ -5,9 +5,12 @@
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
     "knex": "^0.21.21",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.1",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.20",
+    "normalizr": "^3.6.2",
     "pug": "^3.0.2",
     "socket.io": "^4.5.3",
     "sqlite3": "^5.1.2"
