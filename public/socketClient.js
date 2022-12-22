@@ -1,6 +1,19 @@
 const socket = io();
 socket.on("connect", () => {});
 
+const schema = normalizr.schema;
+const normalize = normalizr.normalize;
+const denormalize = normalizr.denormalize;
+const authorSchema = new schema.Entity("authors");
+const messageSchema = new schema.Entity(
+  "messages",
+  {
+    author: authorSchema,
+  },
+  { idAttribute: "_id" }
+);
+const messageListSchema = [messageSchema];
+
 socket.on("lastProducts", (data) => {
   const lastProducts = [
     data[data.length - 1],
@@ -48,10 +61,21 @@ const sendMsg = () => {
 };
 
 socket.on("chat", (data) => {
+  const denormalizedData = denormalize(
+    data.result,
+    messageListSchema,
+    data.entities
+  );
+
+  const normalizedCount = document.getElementById("normalizados");
+  const denormalizedCount = document.getElementById("desnormalizados");
+  normalizedCount.innerHTML = JSON.stringify(data).length;
+  denormalizedCount.innerHTML = JSON.stringify(denormalizedData).length;
+
   const divFiller = document.getElementById("div-chats");
   try {
     divFiller.innerHTML = "";
-    data.map((message) => {
+    denormalizedData.map((message) => {
       divFiller.innerHTML += `<div class="m-3 d-flex justify-content-between">
                               <div>
                                 <span style="color:blue; font-weight:bold">${message.author.id}</span>
