@@ -1,6 +1,12 @@
 {{> navbar}}
 <br/>
 
+<div class="container my-5 d-flex justify-content-between">
+  <h1 class="text-center">Bienvenido {{user}}</h1>
+  <form action="/logout" method="post">   
+    <button class="btn btn-primary">Cerrar sesión</button>
+  </form>
+</div>
 <form  class="container d-flex flex-column" action="/productos" method="POST" enctype="multipart/form-data">
   <label for="title">Título</label>
       <input type="text" name="title" />

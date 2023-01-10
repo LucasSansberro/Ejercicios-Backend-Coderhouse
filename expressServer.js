@@ -3,10 +3,12 @@ const container = require("./container");
 const products = new container.Container("products");
 const { chatLog } = require("./containerChat");
 const { createNProducts } = require("./faker.js");
-const { normalizeChat} = require("./normalizr.js");
+const { normalizeChat } = require("./normalizr.js");
 
 //Express Server
 const express = require("express");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const multer = require("multer");
 const app = express();
 const PORT = 8080;
@@ -53,22 +55,68 @@ app.engine(
 );
 
 //HTTP Server
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://lucassansberro:YTJjWyrti6fYUtX0@coderhouse-backend.61noa9o.mongodb.net",
+      mongoOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+      ttl: 60,
+      cookie: { maxAge: 60000 * 10 },
+    }),
+    secret: "secreto",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
 });
 
 server.on("Error", (error) => console.log(`Error en servidor ${error}`));
 
-app.get(`/`, (req, res) => {
-  res.render("form");
+const auth = (req, res, next) => {
+  if (req.session.user) {
+    return next();
+  } else {
+    res.redirect("/loginError");
+  }
+};
+
+app.get("/loginError", (req, res) => {
+  res.render("loginError");
 });
 
-app.get(`/productos`, async (req, res) => {
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post(`/login`, upload.single("thumbnail"), (req, res) => {
+  const user = req.body.user;
+  req.session.user = user;
+  return res.redirect("/");
+});
+
+app.post("/logout", (req, res) => {
+  const user = req.session.user;
+  res.render("logout", { user });
+  req.session.destroy();
+});
+
+app.get(`/`, auth, (req, res) => {
+  const user = req.session.user;
+  res.render("form", { user });
+});
+
+app.get(`/productos`, auth, async (req, res) => {
   const allProducts = await products.getAll();
   res.render("products", { products: allProducts, productsExist: true });
 });
 
-app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
+app.post(`/productos`, upload.single("thumbnail"), auth, (req, res) => {
   let timestamp = new Date().toLocaleString();
   const title = req.body.title;
   const description = req.body.description;
@@ -88,7 +136,7 @@ app.post(`/productos`, upload.single("thumbnail"), (req, res) => {
   return res.redirect("/");
 });
 
-app.get(`/productos-test`, (req, res) => {
+app.get(`/productos-test`, auth, (req, res) => {
   let productsArray = [];
   createNProducts(productsArray, 5);
   res.render("productsRandom", {
@@ -97,7 +145,7 @@ app.get(`/productos-test`, (req, res) => {
   });
 });
 
-app.post(`/productos-test`, upload.single("thumbnail"), (req, res) => {
+app.post(`/productos-test`, upload.single("thumbnail"), auth, (req, res) => {
   let productsArray = [];
   createNProducts(productsArray, 5);
   productsArray.forEach((product) => products.save(product));

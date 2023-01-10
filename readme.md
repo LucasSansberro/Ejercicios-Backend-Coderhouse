@@ -1,16 +1,16 @@
-# Entrega 8
+# Entrega 12
 
-![Ejercicio redactado](./Pics/entrega-11-imagen-1.png)
+![Ejercicio redactado](./Pics/entrega-12-imagen-1.png)
 
-![Ejercicio redactado](./Pics/entrega-11-imagen-2.png)
+![Ejercicio redactado](./Pics/entrega-12-imagen-2.png)
 
-![Ejercicio redactado](./Pics/entrega-11-imagen-3.png)
+![Página de Login](./Pics/entrega-12-imagen-3.png)
 
-![Ejercicio redactado](./Pics/entrega-11-imagen-4.png)
+![Error de autenticación](./Pics/entrega-12-imagen-4.png)
 
-![Productos random - Prueba de uso](./Pics/entrega-11-imagen-5.png)
+![Bienvenida al usuario tras loguearse](./Pics/entrega-12-imagen-5.png)
 
-![Tamaño de mensajes normalizados y desnormalizados](./Pics/entrega-11-imagen-6.png)
+![Mensaje al cerrar sesión](./Pics/entrega-12-imagen-6.png)
 
 ## 1) Abrir puertos para MySQL
 
