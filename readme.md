@@ -1,20 +1,20 @@
-# Entrega 12
+# Entrega 13
 
-![Ejercicio redactado](./Pics/entrega-12-imagen-2.png)
+![Ejercicio redactado](./Pics/entrega-12-imagen2.png)
 
-![Ejercicio redactado](./Pics/entrega-12-imagen-3.png)
+![Ejercicio redactado](./Pics/entrega-12-imagen3.png)
 
-![Página de Login](./Pics/entrega-12-imagen-1.png)
+![Página de Login](./Pics/entrega-12-imagen1.png)
 
-![Página de registro](./Pics/entrega-12-imagen-4.png)
+![Página de registro](./Pics/entrega-12-imagen4.png)
 
-![Error de autenticación al loguearse](./Pics/entrega-12-imagen-5.png)
+![Error de autenticación al loguearse](./Pics/entrega-12-imagen5.png)
 
-![Error al registrarse por usuario repetido](./Pics/entrega-12-imagen-6.png)
+![Error al registrarse por usuario repetido](./Pics/entrega-12-imagen6.png)
 
-![Mensaje de bienvenida al iniciar sesión](./Pics/entrega-12-imagen-7.png)
+![Mensaje de bienvenida al iniciar sesión](./Pics/entrega-12-imagen7.png)
 
-![Usuarios guardados en MongoAtlas, con contraseña encriptada](./Pics/entrega-12-imagen-8.png)
+![Usuarios guardados en MongoAtlas, con contraseña encriptada](./Pics/entrega-12-imagen8.png)
 
 ## 1) Abrir puertos para MySQL
 
