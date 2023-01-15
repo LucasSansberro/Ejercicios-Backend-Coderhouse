@@ -8,6 +8,11 @@ const { normalizeChat } = require("./normalizr.js");
 //Express Server
 const express = require("express");
 const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const Usuarios = require("./usuarios.js");
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const multer = require("multer");
 const app = express();
@@ -39,6 +44,80 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+//Config de usuarios en MongoDB
+function isValidPassword(user, password) {
+  return bcrypt.compareSync(password, user.password);
+}
+
+function createHash(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+}
+
+passport.use(
+  "login",
+  new LocalStrategy((username, password, done) => {
+    Usuarios.findOne({ username }, (err, user) => {
+      if (err) return done(err);
+
+      if (!user) {
+        console.log("User Not Found with username " + username);
+        return done(null, false);
+      }
+
+      if (!isValidPassword(user, password)) {
+        console.log("Invalid Password");
+        return done(null, false);
+      }
+
+      return done(null, user);
+    });
+  })
+);
+
+passport.use(
+  "signup",
+  new LocalStrategy(
+    {
+      passReqToCallback: true,
+    },
+    (req, username, password, done) => {
+      Usuarios.findOne({ username: username }, function (err, user) {
+        if (err) {
+          console.log("Error in SignUp: " + err);
+          return done(err);
+        }
+
+        if (user) {
+          console.log("User already exists");
+          return done(null, false);
+        }
+
+        const newUser = {
+          username: username,
+          password: createHash(password),
+        };
+        Usuarios.create(newUser, (err, userWithId) => {
+          if (err) {
+            console.log("Error in Saving user: " + err);
+            return done(err);
+          }
+          console.log(user);
+          console.log("User Registration succesful");
+          return done(null, userWithId);
+        });
+      });
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  Usuarios.findById(id, done);
+});
+
 //Handlebars config
 app.set("view engine", "hbs");
 app.set("views", ".//views");
@@ -64,7 +143,7 @@ app.use(
         useNewUrlParser: true,
         useUnifiedTopology: true,
       },
-      ttl: 60,
+      ttl:  60000 * 10,
       cookie: { maxAge: 60000 * 10 },
     }),
     secret: "secreto",
@@ -72,6 +151,18 @@ app.use(
     saveUninitialized: false,
   })
 );
+mongoose
+  .connect(
+    "mongodb+srv://lucassansberro:YTJjWyrti6fYUtX0@coderhouse-backend.61noa9o.mongodb.net/?retryWrites=true&w=majority"
+  )
+  .then(() => console.log("\x1b[32m", "Connected to Mongo ✅"))
+  .catch((e) => {
+    console.error(e);
+    throw "can not connect to the mongo! ❌";
+  });
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
@@ -80,35 +171,79 @@ const server = httpServer.listen(PORT, () => {
 server.on("Error", (error) => console.log(`Error en servidor ${error}`));
 
 const auth = (req, res, next) => {
-  if (req.session.user) {
-    return next();
+  if (req.isAuthenticated()) {
+    next();
   } else {
     res.redirect("/loginError");
   }
 };
 
+app.get("/register", (req, res) => {
+  if (req.isAuthenticated()) {
+    const { username, password } = req.user;
+    const user = { username, password };
+    res.render("form", { user });
+  } else {
+    res.render("register");
+  }
+});
+
+app.post(
+  `/register`,
+  upload.single("thumbnail"),
+  passport.authenticate("signup", { failureRedirect: "/registerErrorAuth" }),
+  (req, res) => {
+    const { username, password } = req.user;
+    const user = { username, password };
+    res.render("form", { user });
+  }
+);
+
+app.get("/registerErrorAuth", (req, res) => {
+  res.render("registerErrorAuth");
+});
+
+app.get("/login", (req, res) => {
+  if (req.isAuthenticated()) {
+    const { username, password } = req.user;
+    const user = { username, password };
+    res.render("form", { user });
+  } else {
+    res.render("login");
+  }
+});
+
+app.post(
+  `/login`,
+  upload.single("thumbnail"),
+  passport.authenticate("login", { failureRedirect: "/loginErrorAuth" }),
+  (req, res) => {
+    const { username, password } = req.user;
+    const user = { username, password };
+    res.render("form", { user });
+  }
+);
+
 app.get("/loginError", (req, res) => {
   res.render("loginError");
 });
 
-app.get("/login", (req, res) => {
-  res.render("login");
-});
-
-app.post(`/login`, upload.single("thumbnail"), (req, res) => {
-  const user = req.body.user;
-  req.session.user = user;
-  return res.redirect("/");
+app.get("/loginErrorAuth", (req, res) => {
+  res.render("loginErrorAuth");
 });
 
 app.post("/logout", (req, res) => {
-  const user = req.session.user;
-  res.render("logout", { user });
-  req.session.destroy();
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+  });
+  res.render("login");
 });
 
 app.get(`/`, auth, (req, res) => {
-  const user = req.session.user;
+  const { username, password } = req.user;
+  const user = { username, password };
   res.render("form", { user });
 });
 

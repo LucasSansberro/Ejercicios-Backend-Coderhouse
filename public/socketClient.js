@@ -61,22 +61,24 @@ const sendMsg = () => {
 };
 
 socket.on("chat", (data) => {
-  const denormalizedData = denormalize(
-    data.result,
-    messageListSchema,
-    data.entities
-  );
+  
+    const denormalizedData = denormalize(
+      data.result,
+      messageListSchema,
+      data.entities
+    );
 
-  const normalizedCount = document.getElementById("normalizados");
-  const denormalizedCount = document.getElementById("desnormalizados");
-  normalizedCount.innerHTML = JSON.stringify(data).length;
-  denormalizedCount.innerHTML = JSON.stringify(denormalizedData).length;
+    if (document.getElementById("normalizados") != null) {
+    const normalizedCount = document.getElementById("normalizados");
+    const denormalizedCount = document.getElementById("desnormalizados");
+    normalizedCount.innerHTML = JSON.stringify(data).length;
+    denormalizedCount.innerHTML = JSON.stringify(denormalizedData).length;
 
-  const divFiller = document.getElementById("div-chats");
-  try {
-    divFiller.innerHTML = "";
-    denormalizedData.map((message) => {
-      divFiller.innerHTML += `<div class="m-3 d-flex justify-content-between">
+    const divFiller = document.getElementById("div-chats");
+    try {
+      divFiller.innerHTML = "";
+      denormalizedData.map((message) => {
+        divFiller.innerHTML += `<div class="m-3 d-flex justify-content-between">
                               <div>
                                 <span style="color:blue; font-weight:bold">${message.author.id}</span>
                                 dice: <span style="color:green;font-style:italic"> ${message.text} </span>
@@ -87,8 +89,9 @@ socket.on("chat", (data) => {
                               </div>
                             </div>
                             <hr>`;
-    });
-  } catch {
-    return;
-  }
+      });
+    } catch {
+      return;
+    }}
+  
 });

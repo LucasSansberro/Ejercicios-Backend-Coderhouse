@@ -3,14 +3,15 @@
 
 <form  class="container d-flex flex-column" action="/register" method="POST" enctype="multipart/form-data">
   <h2>Registro de usuario</h2>
-  <label for="user">Por favor, ingrese su usuario</label>
-  <input type="text" name="user" />
+  <label for="username">Por favor, ingrese su usuario</label>
+  <input type="text" name="username" />
   <br />
-  <label for="user">Por favor, ingrese su contraseña</label>
-  <input type="text" name="user" />
+  <label for="password">Por favor, ingrese su contraseña</label>
+  <input type="password" name="password" />
   <br />
   <input type="submit" value="Enviar" />
 </form>
+<h2 class="text-center mt-5">¿Ya tiene una cuenta? <a href="/login" class="my-3 h2">Inicie sesión</a></h2>
 
 <br/>
 {{> footer}}
