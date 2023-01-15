@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
+    "bcrypt": "^5.1.0",
     "connect-mongo": "^4.6.0",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
@@ -13,6 +14,8 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.20",
     "normalizr": "^3.6.2",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "pug": "^3.0.2",
     "socket.io": "^4.5.3",
     "sqlite3": "^5.1.2"

@@ -72,6 +72,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${PORT}`);
 });
