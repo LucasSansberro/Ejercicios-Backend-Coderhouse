@@ -1,20 +1,16 @@
-# Entrega 13
+# Entrega 14
 
-![Ejercicio redactado](./Pics/entrega-13-imagen2.png)
+![Ejercicio redactado](./Pics/entrega-14-imagen-1.png)
 
-![Ejercicio redactado](./Pics/entrega-13-imagen3.png)
+![Ejercicio redactado](./Pics/entrega-14-imagen-2.png)
 
-![Página de Login](./Pics/entrega-13-imagen1.png)
+![Ejercicio redactado](./Pics/entrega-14-imagen-3.png)
 
-![Página de registro](./Pics/entrega-13-imagen4.png)
+![Puertos en minimist](./Pics/entrega-14-imagen-4.png)
 
-![Error de autenticación al loguearse](./Pics/entrega-13-imagen5.png)
+![Información de process.args](./Pics/entrega-14-imagen-5.png)
 
-![Error al registrarse por usuario repetido](./Pics/entrega-13-imagen6.png)
-
-![Mensaje de bienvenida al iniciar sesión](./Pics/entrega-13-imagen7.png)
-
-![Usuarios guardados en MongoAtlas, con contraseña encriptada](./Pics/entrega-13-imagen8.png)
+![Prueba de uso Fork](./Pics/entrega-14-imagen-6.jpeg)
 
 ## 1) Abrir puertos para MySQL
 
