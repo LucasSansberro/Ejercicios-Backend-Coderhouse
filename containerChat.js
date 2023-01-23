@@ -1,6 +1,9 @@
 //Creación de schema
 const { Schema, model, connect } = require("mongoose");
 
+require("dotenv").config();
+const mongoURL =  process.env.URLMONGO;
+
 const chatSchema = new Schema({
   author: {
     id: { type: String },
@@ -19,7 +22,7 @@ const Chat = model("chat", chatSchema);
 async function connectMG() {
   try {
     await connect(
-      "mongodb+srv://lucassansberro:YTJjWyrti6fYUtX0@coderhouse-backend.61noa9o.mongodb.net/?retryWrites=true&w=majority",
+      mongoURL,
       { useNewUrlParser: true }
     );
   } catch (e) {

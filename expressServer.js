@@ -5,6 +5,17 @@ const { chatLog } = require("./containerChat");
 const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
 
+//Puerto con minimist
+//Ejemplo de uso: nodemon expressServer.js --port 8079
+const initArgs = require("minimist");
+const options = { default: { port: 8080 } };
+const initOptions = initArgs(process.argv.slice(2), options);
+
+//Variables de entorno
+require("dotenv").config();
+const mongoURL = process.env.URLMONGO;
+const { fork } = require("child_process");
+
 //Express Server
 const express = require("express");
 const session = require("express-session");
@@ -16,7 +27,7 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const multer = require("multer");
 const app = express();
-const PORT = 8080;
+const PORT = initOptions.port;
 const { engine } = require("express-handlebars");
 
 app.use(express.json());
@@ -137,13 +148,12 @@ app.engine(
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://lucassansberro:YTJjWyrti6fYUtX0@coderhouse-backend.61noa9o.mongodb.net",
+      mongoUrl: mongoURL,
       mongoOptions: {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       },
-      ttl:  60000 * 10,
+      ttl: 60000 * 10,
       cookie: { maxAge: 60000 * 10 },
     }),
     secret: "secreto",
@@ -152,20 +162,18 @@ app.use(
   })
 );
 mongoose
-  .connect(
-    "mongodb+srv://lucassansberro:YTJjWyrti6fYUtX0@coderhouse-backend.61noa9o.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => console.log("\x1b[32m", "Connected to Mongo ✅"))
+  .connect(mongoURL)
+  .then(() => console.log("\nConnected to MongoDB\n"))
   .catch((e) => {
     console.error(e);
-    throw "can not connect to the mongo! ❌";
+    throw "Error. Couldn't access the Mongo Database";
   });
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 const server = httpServer.listen(PORT, () => {
-  console.log(`Servidor http escuchando en el puerto ${PORT}`);
+  console.log(`\nServidor http escuchando en el puerto ${PORT}`);
 });
 
 server.on("Error", (error) => console.log(`Error en servidor ${error}`));
@@ -286,6 +294,38 @@ app.post(`/productos-test`, upload.single("thumbnail"), auth, (req, res) => {
   createNProducts(productsArray, 5);
   productsArray.forEach((product) => products.save(product));
   res.json({ msg: "Products created" });
+});
+
+app.get(`/info`, (req, res) => {
+  res.json({
+    "Argumentos de entrada": process.argv.slice(2),
+    "Path de ejecución": process.argv[0],
+    "Sistema operativo": process.platform,
+    "ID del proceso": process.pid,
+    "Versión de Node": process.version,
+    "Carpeta del proyecto": process.cwd(),
+    "Memoria total reservada": process.memoryUsage().rss,
+  });
+});
+
+//Fork
+app.get(`/api/randoms`, (req, res) => {
+  let computo = fork("./randomNumFork.js");
+  req.query.hasOwnProperty("cant")
+    ? computo.send(parseInt(req.query.cant))
+    : computo.send(100000000);
+
+  computo.on("message", (msg) => {
+    res.json({
+      Numeros_generados:
+        "Usted ha generado " +
+        msg.msg +
+        " números. Estos, agrupados por repetición, generaron un array de " +
+        msg.arrayRepeatedResult.length +
+        " elementos",
+      numeros: msg.arrayRepeatedResult,
+    });
+  });
 });
 
 //Websocket Server
