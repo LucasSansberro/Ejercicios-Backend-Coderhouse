@@ -1,21 +1,31 @@
 # Entrega 14
 
-![Ejercicio redactado](./Pics/entrega-14-imagen-1.png)
+![Ejercicio redactado](./Pics/entrega-15-imagen-1.png)
 
-![Ejercicio redactado](./Pics/entrega-14-imagen-2.png)
+![Ejercicio redactado](./Pics/entrega-15-imagen-2.png)
 
-![Ejercicio redactado](./Pics/entrega-14-imagen-3.png)
+![Ejercicio redactado](./Pics/entrega-15-imagen-3.png)
 
-![Puertos en minimist](./Pics/entrega-14-imagen-4.png)
+![Ejercicio redactado](./Pics/entrega-15-imagen-4.png)
 
-![Información de process.args](./Pics/entrega-14-imagen-5.png)
+![Listado de PM2](./Pics/entrega-15-imagen-5.png)
 
-![Prueba de uso Fork](./Pics/entrega-14-imagen-6.jpeg)
+![Consola mostrando el funcionamiento de Nginx](./Pics/entrega-15-imagen-6.png)
 
-## 1) Abrir puertos para MySQL
+![/api/randoms funcionando con nginx y balanceo de carga](./Pics/entrega-15-imagen-7.png)
 
-## 2) Ejecutar createTable.js en ./DB/MySQL para crear la tabla de productos
+## Comenzar el servidor con los siguientes comandos
 
-## 3) Ejecutar expressServer.js
+```console
+pm2 start expressServer.js --name="general" -i 1
 
-## 4) Ingresar a localhost:8080
+pm2 start expressServer.js --name="fork" -- --port 8081
+
+pm2 start expressServer.js --name="Cluster1" -i 1 -- --port 8082
+
+pm2 start expressServer.js --name="Cluster2" -i 1 -- --port 8083
+
+pm2 start expressServer.js --name="Cluster3" -i 1 -- --port 8084
+
+pm2 start expressServer.js --name="Cluster4" -i 1 -- --port 8085
+```
