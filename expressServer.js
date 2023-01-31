@@ -6,7 +6,11 @@ const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
 
 //Puerto con minimist
-//Ejemplo de uso: nodemon expressServer.js --port 8079
+//Ejemplo de uso:
+// 1 - Normal: nodemon expressServer.js --port 8079
+// 2 - PM2 con cluster: pm2 start expressServer.js --name="Cluster4" -i 1 -- --port 8085
+// 3 - PM2 con fork:  pm2 start expressServer.js --name="Fork" -- --port 8081
+//Para que nginx y el balanceo funcionen correctamente tenemos que tener los puertos del 8080 al 8085 abiertos
 const initArgs = require("minimist");
 const options = { default: { port: 8080 } };
 const initOptions = initArgs(process.argv.slice(2), options);
@@ -310,21 +314,36 @@ app.get(`/info`, (req, res) => {
 
 //Fork
 app.get(`/api/randoms`, (req, res) => {
-  let computo = fork("./randomNumFork.js");
+  let msg = 0;
   req.query.hasOwnProperty("cant")
-    ? computo.send(parseInt(req.query.cant))
-    : computo.send(100000000);
+    ? (msg = parseInt(req.query.cant))
+    : (msg = 10000);
 
-  computo.on("message", (msg) => {
-    res.json({
-      Numeros_generados:
-        "Usted ha generado " +
-        msg.msg +
-        " números. Estos, agrupados por repetición, generaron un array de " +
-        msg.arrayRepeatedResult.length +
-        " elementos",
-      numeros: msg.arrayRepeatedResult,
-    });
+  let arrayRandomNum = [];
+  let arrayUsedNumber = [];
+  let arrayRepeatedResult = [];
+  for (let i = 0; i < msg; i++) {
+    arrayRandomNum.push(Math.floor(Math.random() * 1000) + 1);
+  }
+
+  arrayRandomNum.forEach((num) => {
+    if (!arrayUsedNumber.includes(num)) {
+      arrayUsedNumber.push(num);
+      arrayRepeatedResult.push({
+        [num]: arrayRandomNum.filter((repeatedNum) => repeatedNum == num)
+          .length,
+      });
+    }
+  });
+
+  res.json({
+    Numeros_generados:
+      "Usted ha generado " +
+      msg +
+      " números. Estos, agrupados por repetición, generaron un array de " +
+      arrayRepeatedResult.length +
+      " elementos",
+    numeros: arrayRepeatedResult,
   });
 });
 
