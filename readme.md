@@ -1,31 +1,43 @@
-# Entrega 15
+# Entrega 16
 
-![Ejercicio redactado](./Pics/entrega-15-imagen-1.png)
+![Ejercicio redactado](./Pics/entrega-16-imagen-1.png)
 
-![Ejercicio redactado](./Pics/entrega-15-imagen-2.png)
+![Ejercicio redactado](./Pics/entrega-16-imagen-2.png)
 
-![Ejercicio redactado](./Pics/entrega-15-imagen-3.png)
+![Ejercicio redactado](./Pics/entrega-16-imagen-3.png)
 
-![Ejercicio redactado](./Pics/entrega-15-imagen-4.png)
+## Sin GZIP
 
-![Listado de PM2](./Pics/entrega-15-imagen-5.png)
+![Peso de get sin gzip](./Pics/entrega-16-imagen-4.png)
 
-![Consola mostrando el funcionamiento de Nginx](./Pics/entrega-15-imagen-6.png)
+## Con GZIP
 
-![/api/randoms funcionando con nginx y balanceo de carga](./Pics/entrega-15-imagen-7.png)
+![Peso de get con gzip](./Pics/entrega-16-imagen-5.png)
 
-## Comenzar el servidor con los siguientes comandos
+## Logs de Winston
 
-```console
-pm2 start expressServer.js --name="general" -i 1
+![Warn logs](./Pics/entrega-16-imagen-6.png)
 
-pm2 start expressServer.js --name="fork" -- --port 8081
+![Error logs](./Pics/entrega-16-imagen-7.png)
 
-pm2 start expressServer.js --name="Cluster1" -i 1 -- --port 8082
+## Sumario de artillery
 
-pm2 start expressServer.js --name="Cluster2" -i 1 -- --port 8083
+![Logs de artillery](./Pics/entrega-16-imagen-8.png)
 
-pm2 start expressServer.js --name="Cluster3" -i 1 -- --port 8084
+## Sumario de node --prof
 
-pm2 start expressServer.js --name="Cluster4" -i 1 -- --port 8085
-```
+![Logs de node --prof](./Pics/entrega-16-imagen-9.png)
+
+## Información de autocannon
+
+![Autocannon console.log](./Pics/entrega-16-imagen-10.png)
+
+## Google Node profiler
+
+![Tiempo de carga de api/randoms en chrome profiler](./Pics/entrega-16-imagen-11.png)
+
+## Gráficos de flama
+
+![Gráfico completo](./Pics/entrega-16-imagen-12.png)
+
+![Gráfico con zoom en operación bloqueante](./Pics/entrega-16-imagen-13.png)
