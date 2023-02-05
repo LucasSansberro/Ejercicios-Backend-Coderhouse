@@ -18,3 +18,4 @@ En este repositorio subiré los ejercicios del curso de Backend en Coderhouse. L
 - 13 - [Inicio de sesión autenticado](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-13)
 - 14 - [Dotenv y fork](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-14)
 - 15 - [Nginx y balanceo de carga](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-15)
+- 16 - [Logs y análisis de performance](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-16)
