@@ -1,5 +1,6 @@
 //Creación de schema
 const { Schema, model, connect } = require("mongoose");
+const { errorLogger } = require("./loggerConfig");
 
 require("dotenv").config();
 const mongoURL =  process.env.URLMONGO;
@@ -21,13 +22,12 @@ const Chat = model("chat", chatSchema);
 //Conexión a la DB
 async function connectMG() {
   try {
-    await connect(
-      mongoURL,
-      { useNewUrlParser: true }
-    );
-  } catch (e) {
-    console.log(e);
-    throw "Error en la conexión";
+    await connect(mongoURL, { useNewUrlParser: true });
+  } catch {
+    return errorLogger.log("error", {
+      mensaje:
+        "There was an error accessing the Database in connectMG() inside containerChat.js",
+    });
   }
 }
 
@@ -43,7 +43,9 @@ class Contenedor {
       await object.save();
       return "Object saved";
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to save(${objeto}) in containerChat`,
+      });
     }
   }
   async editById(id, objeto) {
@@ -57,7 +59,9 @@ class Contenedor {
       );
       return "Object updated";
     } catch {
-      ("There was an error accessing the Database");
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to editById(${id}, ${objeto}) in containerChat`,
+      });
     }
   }
   async getById(id) {
@@ -66,7 +70,9 @@ class Contenedor {
       const data = await this.collection.find({ _id: id });
       return data;
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to getById(${id}) in containerChat`,
+      });
     }
   }
   async getAll() {
@@ -75,7 +81,9 @@ class Contenedor {
       const data = await this.collection.find({});
       return data;
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: "Error while trying to getAll() in containerChat",
+      });
     }
   }
   async deleteById(id) {
@@ -84,7 +92,9 @@ class Contenedor {
       await this.collection.deleteOne({ _id: id });
       return "Object deleted";
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to deleteById(${id}) in containerChat`,
+      });
     }
   }
   async deleteAll() {
@@ -93,7 +103,9 @@ class Contenedor {
       await this.collection.deleteMany();
       return "Objects deleted";
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to deleteAll() in containerChat`,
+      });
     }
   }
 }

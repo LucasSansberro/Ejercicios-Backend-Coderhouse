@@ -4,6 +4,7 @@ const products = new container.Container("products");
 const { chatLog } = require("./containerChat");
 const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
+const { warnLogger } = require("./loggerConfig");
 
 //Puerto con minimist
 //Ejemplo de uso:
@@ -22,6 +23,7 @@ const { fork } = require("child_process");
 
 //Express Server
 const express = require("express");
+const compression = require("compression");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -36,6 +38,7 @@ const { engine } = require("express-handlebars");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 
 //Websocket config
 const httpServer = require("http").createServer(app);
@@ -181,6 +184,11 @@ const server = httpServer.listen(PORT, () => {
 });
 
 server.on("Error", (error) => console.log(`Error en servidor ${error}`));
+
+app.use((req, res, next) => {
+  warnLogger.info({ metodo: req.method, path: req.path });
+  next();
+});
 
 const auth = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -345,6 +353,11 @@ app.get(`/api/randoms`, (req, res) => {
       " elementos",
     numeros: arrayRepeatedResult,
   });
+});
+
+app.get("*", (req, res, next) => {
+  warnLogger.warn({ metodo: req.method, path: req.path });
+  next();
 });
 
 //Websocket Server

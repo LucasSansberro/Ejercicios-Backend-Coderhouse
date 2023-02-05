@@ -1,6 +1,7 @@
 const normalizr = require("normalizr");
 const schema = normalizr.schema;
 const normalize = normalizr.normalize;
+const { errorLogger } = require("./loggerConfig");
 
 const authorSchema = new schema.Entity("authors");
 const messageSchema = new schema.Entity(
@@ -13,7 +14,7 @@ const messageSchema = new schema.Entity(
 const messageListSchema = [messageSchema];
 
 const normalizeChat = (chat) => {
-
+  try {
     const chatToNormalize = chat.map((msg) => ({
       author: msg.author,
       _id: msg["_id"],
@@ -24,7 +25,11 @@ const normalizeChat = (chat) => {
 
     const normalizedData = normalize(chatToNormalize, messageListSchema);
     return normalizedData;
-  
+  } catch {
+    errorLogger.log("error", {
+      mensaje: "Error in normalizr.js",
+    });
+  }
 };
 
 module.exports = { normalizeChat };

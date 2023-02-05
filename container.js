@@ -1,5 +1,6 @@
 const { options } = require(`./DB/MySQL/options`);
 const knex = require("knex")(options);
+const { errorLogger } = require("./loggerConfig");
 
 class Container {
   constructor(table) {
@@ -11,7 +12,9 @@ class Container {
       await knex(this.table).insert(object);
       return "Object saved";
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to save(${objeto}) in container`,
+      });
     }
   }
 
@@ -20,7 +23,9 @@ class Container {
       await knex(this.table).where("id", "=", id).update(object);
       return "Object updated";
     } catch {
-      ("There was an error accessing the Database");
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to editById(${id}, ${objeto}) in container`,
+      });
     }
   }
 
@@ -29,7 +34,9 @@ class Container {
       const data = await knex(this.table).where("id", "=", id).select();
       return data;
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to getById(${id}) in container`,
+      });
     }
   }
 
@@ -38,7 +45,9 @@ class Container {
       const data = await knex(this.table).select("*");
       return data;
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: "Error while trying to getAll() in container",
+      });
     }
   }
 
@@ -47,7 +56,9 @@ class Container {
       await knex(this.table).where("id", "=", id).del();
       return "Object deleted";
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to deleteById(${id}) in container`,
+      });
     }
   }
 
@@ -56,7 +67,9 @@ class Container {
       knex(this.table).del();
       return "All content in the table has been removed";
     } catch {
-      return "There was an error accessing the Database";
+      return errorLogger.log("error", {
+        mensaje: `Error while trying to deleteAll() in container`,
+      });
     }
   }
 }
