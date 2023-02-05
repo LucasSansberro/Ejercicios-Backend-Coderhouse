@@ -19,7 +19,6 @@ const initOptions = initArgs(process.argv.slice(2), options);
 //Variables de entorno
 require("dotenv").config();
 const mongoURL = process.env.URLMONGO;
-const { fork } = require("child_process");
 
 //Express Server
 const express = require("express");
