@@ -28,7 +28,7 @@ socket.on("lastProducts", (data) => {
                                 <img src="${product.thumbnail}" class="card-img-top" alt=${product.title}/>
                                 <div class="card-body d-flex flex-column justify-content-between">
                                   <h5 class="card-title">${product.title}</h5>
-                                  <p class="card-text">Precio: $${product.price} / ID: ${product.id}</p>
+                                  <p class="card-text">Precio: $${product.price} / ID: ${product._id}</p>
                                 </div>
                               </div>`;
     });

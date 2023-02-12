@@ -1,5 +1,5 @@
 //Container import
-const { chatLog, products } = require("./containerChat");
+const { chatLog, products, Usuarios } = require("./containerChat");
 const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
 const { warnLogger } = require("./loggerConfig");
@@ -24,13 +24,12 @@ const compression = require("compression");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const Usuarios = require("./usuarios.js");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const multer = require("multer");
 const app = express();
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || initOptions
 const { engine } = require("express-handlebars");
 
 app.use(express.json());

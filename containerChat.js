@@ -30,6 +30,14 @@ const ProductosSchema = new Schema({
 });
 const Productos = model("productos", ProductosSchema);
 
+const mongoose = require("mongoose");
+const UsuarioSchema = new mongoose.Schema({
+  username: { type: String, required: true, max: 100 },
+  password: { type: String, required: true, max: 100 },
+});
+
+const Usuarios = mongoose.model("usuarios", UsuarioSchema);
+
 //Conexión a la DB
 async function connectMG() {
   try {
@@ -88,7 +96,7 @@ class Contenedor {
   async getAll() {
     try {
       await connectMG();
-      const data = await this.collection.find({});
+      const data = await this.collection.find({}).lean();
       return data;
     } catch {
       return errorLogger.log("error", {
@@ -122,7 +130,7 @@ class Contenedor {
 
 const chatLog = new Contenedor(Chat);
 const products = new Contenedor(Productos);
-module.exports = { chatLog, products };
+module.exports = { chatLog, products, Usuarios };
 
 /* test.save({
   author: {
