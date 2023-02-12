@@ -32,7 +32,7 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const multer = require("multer");
 const app = express();
-const PORT = initOptions.port;
+const PORT = process.env.port;
 const { engine } = require("express-handlebars");
 
 app.use(express.json());
@@ -49,14 +49,7 @@ const storage = multer.diskStorage({
     cb(null, "./images");
   },
   filename: (req, file, cb) => {
-    cb(
-      null,
-      file.fieldname +
-        "-" +
-        Date.now() +
-        "." +
-        file.originalname.split(".").pop()
-    );
+    cb(null, file.fieldname + "-" + Date.now() + "." + file.originalname.split(".").pop());
   },
 });
 const upload = multer({ storage: storage });
@@ -322,9 +315,7 @@ app.get(`/info`, (req, res) => {
 //Fork
 app.get(`/api/randoms`, (req, res) => {
   let msg = 0;
-  req.query.hasOwnProperty("cant")
-    ? (msg = parseInt(req.query.cant))
-    : (msg = 10000);
+  req.query.hasOwnProperty("cant") ? (msg = parseInt(req.query.cant)) : (msg = 10000);
 
   let arrayRandomNum = [];
   let arrayUsedNumber = [];
@@ -337,8 +328,7 @@ app.get(`/api/randoms`, (req, res) => {
     if (!arrayUsedNumber.includes(num)) {
       arrayUsedNumber.push(num);
       arrayRepeatedResult.push({
-        [num]: arrayRandomNum.filter((repeatedNum) => repeatedNum == num)
-          .length,
+        [num]: arrayRandomNum.filter((repeatedNum) => repeatedNum == num).length,
       });
     }
   });
