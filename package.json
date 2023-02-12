@@ -1,4 +1,6 @@
-{
+{"scripts": {
+  "start": "node expressServer.js"
+},
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "artillery": "^1.5.6",
