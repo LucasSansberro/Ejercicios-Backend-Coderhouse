@@ -1,7 +1,5 @@
 //Container import
-const container = require("./container");
-const products = new container.Container("products");
-const { chatLog } = require("./containerChat");
+const { chatLog, products } = require("./containerChat");
 const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
 const { warnLogger } = require("./loggerConfig");

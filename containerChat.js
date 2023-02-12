@@ -3,7 +3,7 @@ const { Schema, model, connect } = require("mongoose");
 const { errorLogger } = require("./loggerConfig");
 
 require("dotenv").config();
-const mongoURL =  process.env.URLMONGO;
+const mongoURL = process.env.URLMONGO;
 
 const chatSchema = new Schema({
   author: {
@@ -19,14 +19,24 @@ const chatSchema = new Schema({
 });
 const Chat = model("chat", chatSchema);
 
+const ProductosSchema = new Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  code: { type: String, required: true },
+  price: { type: Number, required: true, min: 0 },
+  stock: { type: Number, required: true, min: 0 },
+  thumbnail: { type: String, required: true },
+  timestamp: { type: String, required: true },
+});
+const Productos = model("productos", ProductosSchema);
+
 //Conexión a la DB
 async function connectMG() {
   try {
     await connect(mongoURL, { useNewUrlParser: true });
   } catch {
     return errorLogger.log("error", {
-      mensaje:
-        "There was an error accessing the Database in connectMG() inside containerChat.js",
+      mensaje: "There was an error accessing the Database in connectMG() inside containerChat.js",
     });
   }
 }
@@ -111,7 +121,8 @@ class Contenedor {
 }
 
 const chatLog = new Contenedor(Chat);
-module.exports = { Contenedor, chatLog };
+const products = new Contenedor(Productos);
+module.exports = { chatLog, products };
 
 /* test.save({
   author: {
