@@ -32,7 +32,7 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const multer = require("multer");
 const app = express();
-const PORT = process.env.port;
+const PORT = process.env.PORT || 8080
 const { engine } = require("express-handlebars");
 
 app.use(express.json());
