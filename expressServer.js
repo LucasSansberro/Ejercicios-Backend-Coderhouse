@@ -4,8 +4,7 @@ const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
 const { warnLogger } = require("./loggerConfig");
 
-//Puerto con minimist
-//Ejemplo de uso:
+//Modos de arranque:
 // 1 - Normal: nodemon expressServer.js --port 8079
 // 2 - PM2 con cluster: pm2 start expressServer.js --name="Cluster4" -i 1 -- --port 8085
 // 3 - PM2 con fork:  pm2 start expressServer.js --name="Fork" -- --port 8081
