@@ -28,7 +28,7 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const multer = require("multer");
 const app = express();
-const PORT = process.env.PORT || initOptions
+const PORT = process.env.PORT || initOptions.port;
 const { engine } = require("express-handlebars");
 
 app.use(express.json());
@@ -86,7 +86,7 @@ passport.use(
     {
       passReqToCallback: true,
     },
-    (req, username, password, done) => {
+    async (req, username, password, done) => {
       Usuarios.findOne({ username: username }, function (err, user) {
         if (err) {
           console.log("Error in SignUp: " + err);
@@ -101,6 +101,11 @@ passport.use(
         const newUser = {
           username: username,
           password: createHash(password),
+          nombre: req.body.nombre,
+          direccion: req.body.direccion,
+          edad: req.body.edad,
+          telefono: req.body.telefono,
+          avatar: req.body.avatar,
         };
         Usuarios.create(newUser, (err, userWithId) => {
           if (err) {
@@ -188,8 +193,8 @@ const auth = (req, res, next) => {
 
 app.get("/register", (req, res) => {
   if (req.isAuthenticated()) {
-    const { username, password } = req.user;
-    const user = { username, password };
+    const { username, password, nombre, direccion, edad, telefono, avatar } = req.user;
+    const user = { username, password, nombre, direccion, edad, telefono, avatar };
     res.render("form", { user });
   } else {
     res.render("register");
@@ -201,8 +206,8 @@ app.post(
   upload.single("thumbnail"),
   passport.authenticate("signup", { failureRedirect: "/registerErrorAuth" }),
   (req, res) => {
-    const { username, password } = req.user;
-    const user = { username, password };
+    const { username, password, nombre, direccion, edad, telefono, avatar } = req.user;
+    const user = { username, password, nombre, direccion, edad, telefono, avatar };
     res.render("form", { user });
   }
 );
@@ -251,6 +256,7 @@ app.post("/logout", (req, res) => {
 
 app.get(`/`, auth, (req, res) => {
   const { username, password } = req.user;
+  console.log(req.user._id.toHexString())
   const user = { username, password };
   res.render("form", { user });
 });

@@ -34,9 +34,36 @@ const mongoose = require("mongoose");
 const UsuarioSchema = new mongoose.Schema({
   username: { type: String, required: true, max: 100 },
   password: { type: String, required: true, max: 100 },
+  nombre: { type: String, required: true, max: 100 },
+  direccion: { type: String, required: true, max: 200 },
+  edad: { type: Number, required: true, min: 0 },
+  telefono: { type: String, required: true, max: 100 },
+  avatar: { type: String, required: true, max: 500 },
 });
 
 const Usuarios = mongoose.model("usuarios", UsuarioSchema);
+
+const CarritoSchema = new Schema(
+  {
+    timestamp: { type: String, required: true },
+    productos: [
+      {
+        title: String,
+        description: String,
+        code: String,
+        price: Number,
+        stock: Number,
+        thumbnail: String,
+        timestamp: String,
+      },
+    ],
+    user_id: { type: String, required: true },
+  },
+  {
+    virtuals: true,
+  }
+);
+const Carrito = model("carrito", CarritoSchema);
 
 //Conexión a la DB
 async function connectMG() {
@@ -130,7 +157,8 @@ class Contenedor {
 
 const chatLog = new Contenedor(Chat);
 const products = new Contenedor(Productos);
-module.exports = { chatLog, products, Usuarios };
+const carrito = new Contenedor(Carrito);
+module.exports = { chatLog, products, Usuarios, carrito };
 
 /* test.save({
   author: {
