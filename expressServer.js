@@ -4,6 +4,7 @@ const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
 const { warnLogger } = require("./loggerConfig");
 const { sendMail, sendCartMail } = require("./nodemailer.js");
+const { sendPhoneMsg, sendWhatsAppMsg } = require("./twilio");
 
 //Modos de arranque:
 // 1 - Normal: nodemon expressServer.js --port 8079
@@ -307,6 +308,8 @@ app.post("/finalizarCarrito", async (req, res) => {
   const carrito_usuario = await carrito.getById(req.user.carrito_id);
   const productos = carrito_usuario[0].productos;
   sendCartMail(req.user.username, productos);
+  sendWhatsAppMsg(JSON.stringify(productos, null, 4));
+  sendPhoneMsg(req.user.telefono, JSON.stringify(productos, null, 4));
   carrito_usuario[0].productos = [];
   carrito.editById(req.user.carrito_id, carrito_usuario[0]);
   return res.redirect("/productos");
