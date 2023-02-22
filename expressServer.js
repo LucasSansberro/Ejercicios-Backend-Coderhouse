@@ -3,6 +3,7 @@ const { chatLog, products, Usuarios, carrito } = require("./containerChat");
 const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
 const { warnLogger } = require("./loggerConfig");
+const { sendMail, sendCartMail } = require("./nodemailer.js");
 
 //Modos de arranque:
 // 1 - Normal: nodemon expressServer.js --port 8079
@@ -114,6 +115,7 @@ passport.use(
           avatar: req.body.avatar,
           carrito_id: idNumber,
         };
+        sendMail(newUser);
         Usuarios.create(newUser, (err, userWithId) => {
           if (err) {
             console.log("Error in Saving user: " + err);
@@ -301,6 +303,15 @@ app.post("/carrito/:id", async (req, res) => {
   return res.redirect("/productos");
 });
 
+app.post("/finalizarCarrito", async (req, res) => {
+  const carrito_usuario = await carrito.getById(req.user.carrito_id);
+  const productos = carrito_usuario[0].productos;
+  sendCartMail(req.user.username, productos);
+  carrito_usuario[0].productos = [];
+  carrito.editById(req.user.carrito_id, carrito_usuario[0]);
+  return res.redirect("/productos");
+});
+
 app.get(`/productos-test`, auth, (req, res) => {
   let productsArray = [];
   createNProducts(productsArray, 5);
@@ -321,7 +332,7 @@ app.get(`/user-info`, auth, async (req, res) => {
   const id = req.user._id.toHexString();
   const { username, nombre, direccion, edad, telefono, avatar } = req.user;
   const carrito_usuario = await carrito.getById(req.user.carrito_id);
-  const productosCarrito = carrito_usuario[0].productos
+  const productosCarrito = carrito_usuario[0].productos;
   res.render("user-info", { username, id, nombre, direccion, edad, telefono, avatar, productos: productosCarrito });
 });
 

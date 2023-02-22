@@ -18,6 +18,9 @@
   {{#each productos}}
   <p class="bg bg-info p-3">Producto: {{this.title}} / Precio: ${{this.price}}</p>
   {{/each}}
+  <form action="/finalizarCarrito" method="post">   
+    <button class="btn btn-primary mx-auto d-block mt-5">Confirmar compra</button>
+  </form>
 </div>
 </div>
 <form action="/logout" method="post">   
