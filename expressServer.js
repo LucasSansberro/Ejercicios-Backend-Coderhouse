@@ -1,5 +1,5 @@
 //Container import
-const { chatLog, products, Usuarios } = require("./containerChat");
+const { chatLog, products, Usuarios, carrito } = require("./containerChat");
 const { createNProducts } = require("./faker.js");
 const { normalizeChat } = require("./normalizr.js");
 const { warnLogger } = require("./loggerConfig");
@@ -86,8 +86,8 @@ passport.use(
     {
       passReqToCallback: true,
     },
-    async (req, username, password, done) => {
-      Usuarios.findOne({ username: username }, function (err, user) {
+    (req, username, password, done) => {
+      Usuarios.findOne({ username: username }, async function (err, user) {
         if (err) {
           console.log("Error in SignUp: " + err);
           return done(err);
@@ -98,6 +98,12 @@ passport.use(
           return done(null, false);
         }
 
+        let timestamp = new Date().toLocaleString();
+        const idNumber = await carrito.save({
+          timestamp,
+          productos: [],
+        });
+
         const newUser = {
           username: username,
           password: createHash(password),
@@ -106,6 +112,7 @@ passport.use(
           edad: req.body.edad,
           telefono: req.body.telefono,
           avatar: req.body.avatar,
+          carrito_id: idNumber,
         };
         Usuarios.create(newUser, (err, userWithId) => {
           if (err) {
@@ -193,8 +200,8 @@ const auth = (req, res, next) => {
 
 app.get("/register", (req, res) => {
   if (req.isAuthenticated()) {
-    const { username, password, nombre, direccion, edad, telefono, avatar } = req.user;
-    const user = { username, password, nombre, direccion, edad, telefono, avatar };
+    const { username, password } = req.user;
+    const user = { username, password };
     res.render("form", { user });
   } else {
     res.render("register");
@@ -206,8 +213,8 @@ app.post(
   upload.single("thumbnail"),
   passport.authenticate("signup", { failureRedirect: "/registerErrorAuth" }),
   (req, res) => {
-    const { username, password, nombre, direccion, edad, telefono, avatar } = req.user;
-    const user = { username, password, nombre, direccion, edad, telefono, avatar };
+    const { username, password } = req.user;
+    const user = { username, password };
     res.render("form", { user });
   }
 );
@@ -254,9 +261,8 @@ app.post("/logout", (req, res) => {
   res.render("login");
 });
 
-app.get(`/`, auth, (req, res) => {
+app.get(`/`, auth, async (req, res) => {
   const { username, password } = req.user;
-  console.log(req.user._id.toHexString())
   const user = { username, password };
   res.render("form", { user });
 });
@@ -286,6 +292,15 @@ app.post(`/productos`, upload.single("thumbnail"), auth, (req, res) => {
   return res.redirect("/");
 });
 
+app.post("/carrito/:id", async (req, res) => {
+  const { id } = req.params;
+  const carrito_usuario = await carrito.getById(req.user.carrito_id);
+  const producto = await products.getById(id);
+  carrito_usuario[0].productos.push(producto[0]);
+  carrito.editById(req.user.carrito_id, carrito_usuario[0]);
+  return res.redirect("/productos");
+});
+
 app.get(`/productos-test`, auth, (req, res) => {
   let productsArray = [];
   createNProducts(productsArray, 5);
@@ -300,6 +315,14 @@ app.post(`/productos-test`, upload.single("thumbnail"), auth, (req, res) => {
   createNProducts(productsArray, 5);
   productsArray.forEach((product) => products.save(product));
   res.json({ msg: "Products created" });
+});
+
+app.get(`/user-info`, auth, async (req, res) => {
+  const id = req.user._id.toHexString();
+  const { username, nombre, direccion, edad, telefono, avatar } = req.user;
+  const carrito_usuario = await carrito.getById(req.user.carrito_id);
+  const productosCarrito = carrito_usuario[0].productos
+  res.render("user-info", { username, id, nombre, direccion, edad, telefono, avatar, productos: productosCarrito });
 });
 
 app.get(`/info`, (req, res) => {

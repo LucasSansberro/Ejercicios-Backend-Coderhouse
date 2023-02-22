@@ -39,6 +39,7 @@ const UsuarioSchema = new mongoose.Schema({
   edad: { type: Number, required: true, min: 0 },
   telefono: { type: String, required: true, max: 100 },
   avatar: { type: String, required: true, max: 500 },
+  carrito_id: {type: String, required:true, max:500}
 });
 
 const Usuarios = mongoose.model("usuarios", UsuarioSchema);
@@ -56,8 +57,7 @@ const CarritoSchema = new Schema(
         thumbnail: String,
         timestamp: String,
       },
-    ],
-    user_id: { type: String, required: true },
+    ]
   },
   {
     virtuals: true,
@@ -85,8 +85,8 @@ class Contenedor {
     try {
       await connectMG();
       const object = new this.collection(objeto);
-      await object.save();
-      return "Object saved";
+      const id = await object.save();
+      return id._id;
     } catch {
       return errorLogger.log("error", {
         mensaje: `Error while trying to save(${objeto}) in containerChat`,
@@ -112,7 +112,7 @@ class Contenedor {
   async getById(id) {
     try {
       await connectMG();
-      const data = await this.collection.find({ _id: id });
+      const data = await this.collection.find({ _id: id }).lean();
       return data;
     } catch {
       return errorLogger.log("error", {
@@ -158,6 +158,8 @@ class Contenedor {
 const chatLog = new Contenedor(Chat);
 const products = new Contenedor(Productos);
 const carrito = new Contenedor(Carrito);
+const users = new Contenedor(Usuarios);
+
 module.exports = { chatLog, products, Usuarios, carrito };
 
 /* test.save({

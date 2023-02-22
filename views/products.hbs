@@ -2,15 +2,19 @@
 <br/>
 
 <h1 class="text-center">Listado de productos</h1>
-<div class="container mt-5 d-flex justify-content-between flex-wrap">
+<div class="container mt-5 d-flex justify-content-between flex-wrap ">
     {{#if productsExist}}
         {{#each products}}
-            <div class="card m-5" style="width:18rem">
+            <div class="card m-5 " style="width:18rem">
                 <img src="{{this.thumbnail}}" class="card-img-top" alt={{this.title}}/>
                     <div class="card-body d-flex flex-column justify-content-between">
                         <h5 class="card-title">{{this.title}}</h5>
-                        <p class="card-text">Precio: ${{this.price}} / ID: {{this._id}}</p>
+                        <p class="card-text">Precio: ${{this.price}}</p>
+                        <p>ID: {{this._id}}</p>
                     </div>
+                    <form class="mb-0" action="/carrito/{{this._id}}" method="POST">
+                        <button class="btn btn-primary w-100">Agregar al carrito</button>
+                    </form>
             </div>
         {{/each}}
         {{else}}
