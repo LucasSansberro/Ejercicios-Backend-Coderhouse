@@ -5,10 +5,10 @@ const authToken = process.env.AUTHTOKEN
 
 const client = twilio(accountSid, authToken);
 
-const sendPhoneMsg = async (num, body) => {
+const sendPhoneMsg = async (num) => {
   try {
     const message = await client.messages.create({
-      body: body,
+      body: "Su pedido se ha recibido y se encuentra en proceso",
       from: "+12708175580",
       to: `+${num}`,
     });

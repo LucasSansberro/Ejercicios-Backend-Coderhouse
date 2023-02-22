@@ -309,7 +309,7 @@ app.post("/finalizarCarrito", async (req, res) => {
   const productos = carrito_usuario[0].productos;
   sendCartMail(req.user.username, productos);
   sendWhatsAppMsg(JSON.stringify(productos, null, 4));
-  sendPhoneMsg(req.user.telefono, JSON.stringify(productos, null, 4));
+  sendPhoneMsg(req.user.telefono);
   carrito_usuario[0].productos = [];
   carrito.editById(req.user.carrito_id, carrito_usuario[0]);
   return res.redirect("/productos");
