@@ -1,7 +1,6 @@
 //Creación de schema
 const { Schema, model, connect } = require("mongoose");
 const { errorLogger } = require("./loggerConfig");
-
 require("dotenv").config();
 const mongoURL = process.env.URLMONGO;
 
@@ -31,6 +30,8 @@ const ProductosSchema = new Schema({
 const Productos = model("productos", ProductosSchema);
 
 const mongoose = require("mongoose");
+mongoose.set('strictQuery', false);
+
 const UsuarioSchema = new mongoose.Schema({
   username: { type: String, required: true, max: 100 },
   password: { type: String, required: true, max: 100 },
