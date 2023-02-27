@@ -1,8 +1,7 @@
-const twilio = require("twilio");
+import twilio from "twilio";
 
 const accountSid = "AC2cf0b6aec061eafa733fdde59eff39ea";
-const authToken = process.env.AUTHTOKEN
-
+const authToken = process.env.AUTHTOKEN;
 const client = twilio(accountSid, authToken);
 
 const sendPhoneMsg = async (num) => {
@@ -31,4 +30,4 @@ const sendWhatsAppMsg = async (body) => {
   }
 };
 
-module.exports = {sendPhoneMsg, sendWhatsAppMsg}
+export { sendPhoneMsg, sendWhatsAppMsg };

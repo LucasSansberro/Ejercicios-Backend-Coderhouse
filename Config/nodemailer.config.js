@@ -1,4 +1,4 @@
-const { createTransport } = require("nodemailer");
+import { createTransport } from "nodemailer";
 
 const TEST_MAIL = "garry.kohler62@ethereal.email";
 
@@ -59,4 +59,4 @@ const sendCartMail = async (user, carrito) => {
   }
 };
 
-module.exports = { sendMail, sendCartMail };
+export { sendMail, sendCartMail };

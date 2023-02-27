@@ -1,4 +1,4 @@
-const winston = require("winston");
+import winston from "winston";
 const warnLogger = winston.createLogger({
   level: "info",
   transports: [
@@ -22,4 +22,4 @@ const errorLogger = winston.createLogger({
   ],
 });
 
-module.exports = { warnLogger, errorLogger };
+export { warnLogger, errorLogger };

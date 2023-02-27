@@ -1,6 +1,7 @@
 {
+  "type": "module",
   "scripts": {
-    "start": "node expressServer.js"
+    "start": "nodemon expressServer.js"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

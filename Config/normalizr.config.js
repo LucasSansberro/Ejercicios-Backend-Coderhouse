@@ -1,8 +1,8 @@
-const normalizr = require("normalizr");
+import normalizr from "normalizr";
+import { errorLogger } from "./logger.config";
+
 const schema = normalizr.schema;
 const normalize = normalizr.normalize;
-const { errorLogger } = require("./loggerConfig");
-
 const authorSchema = new schema.Entity("authors");
 const messageSchema = new schema.Entity(
   "messages",
@@ -32,4 +32,4 @@ const normalizeChat = (chat) => {
   }
 };
 
-module.exports = { normalizeChat };
+export default normalizeChat;

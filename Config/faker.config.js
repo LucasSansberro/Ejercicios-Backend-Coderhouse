@@ -1,24 +1,15 @@
-const { faker } = require("@faker-js/faker");
+import { faker } from "@faker-js/faker";
 faker.locale = "es";
 
 let timestamp = new Date().toLocaleString();
 const createRandomProduct = () => {
   return {
-    price: faker.commerce.price(
-      (min = 1),
-      (max = 1000),
-      (dec = 2),
-      (symbol = "")
-    ),
+    price: faker.commerce.price((min = 1), (max = 1000), (dec = 2), (symbol = "")),
     title: faker.commerce.product(),
     timestamp,
     description: faker.commerce.productDescription(),
     code: faker.commerce.productMaterial(),
-    thumbnail: faker.image.food(
-      (width = 640),
-      (height = 480),
-      (randomize = true)
-    ),
+    thumbnail: faker.image.food((width = 640), (height = 480), (randomize = true)),
   };
 };
 
@@ -28,4 +19,4 @@ const createNProducts = (array, number) => {
   }
 };
 
-module.exports = { createNProducts };
+export default createNProducts;
