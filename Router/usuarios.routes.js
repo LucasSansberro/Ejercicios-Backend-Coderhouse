@@ -37,6 +37,6 @@ routerUsuarios.get("/loginErrorAuth", getLoginErrorAuthController);
 
 routerUsuarios.get("/info", userAuth, getInfoController);
 
-routerUsuarios.get("/logout", getLogoutController);
+routerUsuarios.post("/logout", getLogoutController);
 
 export default routerUsuarios;

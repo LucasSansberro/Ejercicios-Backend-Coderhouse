@@ -1,9 +1,10 @@
-import { warnLogger } from "./Config/logger.config";
-import { httpServer, app } from "./Config/appServer.config";
-import initOptions from "./Config/initArgs.config";
-import routerCarrito from "./Router/carrito.routes";
-import routerProductos from "./Router/productos.routes";
-import { routerUsuarios } from "./Router/usuarios.routes";
+import { warnLogger } from "./Config/logger.config.js";
+import { httpServer, app } from "./Config/appServer.config.js";
+import initOptions from "./Config/initArgs.config.js";
+import routerCarrito from "./Router/carrito.routes.js";
+import routerProductos from "./Router/productos.routes.js";
+import routerUsuarios from "./Router/usuarios.routes.js";
+import routerRandoms from "./Router/randoms.routes.js";
 import "./DB/mongoDAO.js";
 
 const PORT = process.env.PORT || initOptions.port;

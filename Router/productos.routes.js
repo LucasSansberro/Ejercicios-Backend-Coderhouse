@@ -6,6 +6,7 @@ import {
   postProductosRandomController,
 } from "../Controller/productos.controller.js";
 import { userAuth } from "../Controller/usuarios.controller.js";
+import upload from "../Config/multer.config.js"
 const routerProductos = new Router();
 
 routerProductos.get(`/`, userAuth, getProductosController);

@@ -1,8 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
-import app from "./appServer.config";
-import Usuarios from "../Models/Usuarios";
+import Usuarios from "../Models/Usuarios.js";
 
 const isValidPassword = (user, password) => {
   return bcrypt.compareSync(password, user.password);
@@ -89,6 +88,3 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   Usuarios.findById(id, done);
 });
-
-app.use(passport.initialize());
-app.use(passport.session());

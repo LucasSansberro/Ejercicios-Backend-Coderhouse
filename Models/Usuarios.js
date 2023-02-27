@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, model} from "mongoose";
 
-const UsuarioSchema = new mongoose.Schema({
+const UsuarioSchema = new Schema({
   username: { type: String, required: true, max: 100 },
   password: { type: String, required: true, max: 100 },
   nombre: { type: String, required: true, max: 100 },
@@ -11,6 +11,6 @@ const UsuarioSchema = new mongoose.Schema({
   carrito_id: { type: String, required: true, max: 500 },
 });
 
-const Usuarios = mongoose.model("usuarios", UsuarioSchema);
+const Usuarios = model("usuarios", UsuarioSchema);
 
 export default Usuarios;

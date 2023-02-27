@@ -1,4 +1,4 @@
-import { getInfoUser, getAllInfoUser } from "../Services/usuarios.service";
+import { getInfoUser, getAllInfoUser } from "../Services/usuarios.service.js";
 
 const userAuth = (req, res, next) => {
   if (req.isAuthenticated()) {

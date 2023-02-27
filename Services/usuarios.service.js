@@ -3,14 +3,14 @@ import Carrito from "../Models/Carrito.js";
 
 const carrito = new Contenedor(Carrito);
 
-const getInfoUser = (user) => {
+const getInfoUser = (req) => {
   const { username, password } = req.user;
   const user = { username, password };
   return user;
 };
 
 const getAllInfoUser = async (req) => {
-  const carrito_usuario = await carrito.getById(req.user.carrito_id)[0];
+  const carrito_usuario = await carrito.getById(req.user.carrito_id);
   const productosCarrito = carrito_usuario.productos;
 
   const id = req.user._id.toHexString();

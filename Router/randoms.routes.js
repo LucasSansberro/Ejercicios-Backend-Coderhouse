@@ -6,6 +6,4 @@ const routerRandoms = new Router();
 routerRandoms.get("/info", getRandomInfoController);
 routerRandoms.get("/randomNumber", getRandomNumbersController);
 
-app.get(`/api/randoms`);
-
 export default routerRandoms;

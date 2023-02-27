@@ -1,5 +1,5 @@
 import { mongoose, connect } from "mongoose";
-import { errorLogger } from "./Services/loggerConfig";
+import { errorLogger } from "../Config/logger.config.js";
 
 mongoose.set("strictQuery", false);
 const mongoURL = process.env.URLMONGO;
@@ -8,7 +8,7 @@ try {
   connect(mongoURL, { useNewUrlParser: true });
   console.log("Conectado a Mongo!");
 } catch {
-  return errorLogger.log("error", {
+  errorLogger.log("error", {
     mensaje: "There was an error accessing the Database in connectMG() inside containerChat.js",
   });
 }

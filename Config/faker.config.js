@@ -4,12 +4,12 @@ faker.locale = "es";
 let timestamp = new Date().toLocaleString();
 const createRandomProduct = () => {
   return {
-    price: faker.commerce.price((min = 1), (max = 1000), (dec = 2), (symbol = "")),
+    price: faker.commerce.price(1, 1000, 2, ""),
     title: faker.commerce.product(),
     timestamp,
     description: faker.commerce.productDescription(),
     code: faker.commerce.productMaterial(),
-    thumbnail: faker.image.food((width = 640), (height = 480), (randomize = true)),
+    thumbnail: faker.image.food(640, 480, true),
   };
 };
 

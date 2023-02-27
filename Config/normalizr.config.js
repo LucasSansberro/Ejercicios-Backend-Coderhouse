@@ -1,5 +1,5 @@
 import normalizr from "normalizr";
-import { errorLogger } from "./logger.config";
+import { errorLogger } from "./logger.config.js";
 
 const schema = normalizr.schema;
 const normalize = normalizr.normalize;
