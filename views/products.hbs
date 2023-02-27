@@ -12,7 +12,7 @@
                         <p class="card-text">Precio: ${{this.price}}</p>
                         <p>ID: {{this._id}}</p>
                     </div>
-                    <form class="mb-0" action="/carrito/{{this._id}}" method="POST">
+                    <form class="mb-0" action="/api/carrito/producto/{{this._id}}" method="POST">
                         <button class="btn btn-primary w-100">Agregar al carrito</button>
                     </form>
             </div>

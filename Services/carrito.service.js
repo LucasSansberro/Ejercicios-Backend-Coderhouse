@@ -1,9 +1,11 @@
 import Contenedor from "../DB/mongoDAO.js";
 import Carrito from "../Models/Carrito.js";
+import Productos from "../Models/Productos.js";
 import { sendPhoneMsg, sendWhatsAppMsg } from "../Config/twilio.config.js";
 import { sendCartMail } from "../Config/nodemailer.config.js";
 
 const carrito = new Contenedor(Carrito);
+const products = new Contenedor(Productos);
 
 const postCarritoService = async (req) => {
   const carrito_usuario = await carrito.getById(req.user.carrito_id);

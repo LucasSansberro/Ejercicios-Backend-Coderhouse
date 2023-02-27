@@ -4,26 +4,26 @@
 <h1 class="text-center">Datos de sesión</h1>
 <div class="container mt-5 d-flex justify-content-between">
 <div class="d-flex justify-content-between flex-column">
-          <p>ID: {{this.id}}</p>
-           <p>Usuario: {{this.username}}</p>
-           <p>Nombre: {{this.nombre}}</p>
-           <p>Dirección: {{this.direccion}}</p>
-           <p>Edad: {{this.edad}}</p>
-           <p>Teléfono: {{this.telefono}}</p>
-           <p>Imagen: <img src={{this.avatar}} alt="Avatar" style="height:150px; width:200px;margin-left:50px;"></p> 
+          <p>ID: {{user.id}}</p>
+           <p>Usuario: {{user.username}}</p>
+           <p>Nombre: {{user.nombre}}</p>
+           <p>Dirección: {{user.direccion}}</p>
+           <p>Edad: {{user.edad}}</p>
+           <p>Teléfono: {{user.telefono}}</p>
+           <p>Imagen: <img src={{user.avatar}} alt="Avatar" style="height:150px; width:200px;margin-left:50px;"></p> 
            
 </div>
 <div class="d-flex flex-column justify-content-between">
   <h2>Carrito</h2>
-  {{#each productos}}
+  {{#each productosCarrito}}
   <p class="bg bg-info p-3">Producto: {{this.title}} / Precio: ${{this.price}}</p>
   {{/each}}
-  <form action="/finalizarCarrito" method="post">   
+  <form action="/api/carrito" method="post">   
     <button class="btn btn-primary mx-auto d-block mt-5">Confirmar compra</button>
   </form>
 </div>
 </div>
-<form action="/logout" method="post">   
+<form action="/api/usuarios/logout" method="post">   
     <button class="btn btn-primary mx-auto d-block mt-5">Cerrar sesión</button>
   </form>
 <br/>

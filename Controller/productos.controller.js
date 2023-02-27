@@ -12,7 +12,7 @@ const getProductosController = async (req, res) => {
 
 const postProductosController = (req, res) => {
   postProductService(req);
-  return res.redirect("/");
+  return res.redirect("/api/usuarios/login");
 };
 
 const getProductosRandomController = async (req, res) => {

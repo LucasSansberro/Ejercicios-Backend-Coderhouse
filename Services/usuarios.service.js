@@ -11,8 +11,7 @@ const getInfoUser = (req) => {
 
 const getAllInfoUser = async (req) => {
   const carrito_usuario = await carrito.getById(req.user.carrito_id);
-  const productosCarrito = carrito_usuario.productos;
-
+  const productosCarrito = carrito_usuario[0].productos;
   const id = req.user._id.toHexString();
   const { username, nombre, direccion, edad, telefono, avatar } = req.user;
   const user = { username, nombre, direccion, edad, telefono, avatar, id };

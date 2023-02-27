@@ -4,7 +4,7 @@ const userAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.redirect("/loginError");
+    res.redirect("/api/usuarios/loginError");
   }
 };
 
@@ -49,8 +49,8 @@ const getLoginErrorAuthController = (req, res) => {
 };
 
 const getInfoController = async (req, res) => {
-  const { user, productos } = await getAllInfoUser(req);
-  res.render("user-info", { user, productos });
+  const { user, productosCarrito } = await getAllInfoUser(req);
+  res.render("user-info", { user, productosCarrito });
 };
 
 const getLogoutController = (req, res, next) => {
