@@ -82,3 +82,5 @@
 {"level":"warn","message":{"metodo":"GET","path":"/api/usuarios/alt=%22Avatar%22"}}
 {"level":"warn","message":{"metodo":"GET","path":"/api/usuarios/alt=%22Avatar%22"}}
 {"level":"warn","message":{"metodo":"GET","path":"/api/usuarios/alt=%22Avatar%22"}}
+{"level":"warn","message":{"metodo":"GET","path":"/"}}
+{"level":"warn","message":{"metodo":"GET","path":"/login"}}

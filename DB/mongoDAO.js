@@ -14,7 +14,7 @@ try {
 }
 
 //Contenedor
-class Contenedor {
+export default class ContenedorMongo {
   constructor(collection) {
     this.collection = collection;
   }
@@ -85,5 +85,3 @@ class Contenedor {
     }
   }
 }
-
-export default Contenedor;

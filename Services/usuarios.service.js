@@ -1,7 +1,4 @@
-import Contenedor from "../DB/mongoDAO.js";
-import Carrito from "../Models/Carrito.js";
-
-const carrito = new Contenedor(Carrito);
+import DAO from "../DB/factory.js"
 
 const getInfoUser = (req) => {
   const { username, password } = req.user;
@@ -10,7 +7,7 @@ const getInfoUser = (req) => {
 };
 
 const getAllInfoUser = async (req) => {
-  const carrito_usuario = await carrito.getById(req.user.carrito_id);
+  const carrito_usuario = await DAO.carrito.getById(req.user.carrito_id);
   const productosCarrito = carrito_usuario[0].productos;
   const id = req.user._id.toHexString();
   const { username, nombre, direccion, edad, telefono, avatar } = req.user;
