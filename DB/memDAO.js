@@ -6,7 +6,10 @@ export default class ContenedorMem {
   }
   async save(objeto) {
     try {
-      this.array.push(objeto);
+      console.log("Hola");
+      const lastId = this.array[this.array.length - 1]._id + 1;
+      const objetoFinal = { ...objeto, _id: lastId };
+      this.array.push(objetoFinal);
     } catch {
       return errorLogger.log("error", {
         mensaje: `Error while trying to save(${objeto}) in memDAO`,
@@ -63,5 +66,3 @@ export default class ContenedorMem {
     }
   }
 }
-
-

@@ -46,7 +46,7 @@ export default class ContenedorMongo {
   }
   async getById(id) {
     try {
-      const data = await this.collection.find({ _id: id }).lean();
+      const data = await this.collection.findOne({ _id: id }).lean();
       return data;
     } catch {
       return errorLogger.log("error", {

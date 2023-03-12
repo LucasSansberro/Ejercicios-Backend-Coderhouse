@@ -22,6 +22,7 @@ const postProductService = (req) => {
     thumbnail,
     timestamp,
   });
+ 
 };
 
 const getProductosRandomService = async () => {
