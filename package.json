@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "start": "nodemon expressServer.js",
+    "start": "nodemon expressServer.js mongo",
     "mem": "nodemon expressServer.js mem",
     "mongo": "nodemon expressServer.js mongo"
   },
