@@ -1,7 +1,7 @@
-# Entrega 19
+# Entrega 20
 
-![Ejercicio redactado](./Pics/entrega-19-imagen-1.png)
+![Ejercicio redactado](./Pics/entrega-20-imagen-1.png)
 
-![Organización de carpetas](./Pics/entrega-19-imagen-2.png)
+![Factory.js](./Pics/entrega-20-imagen-2.png)
 
-![Archivo del servidor, mucho más prolijo](./Pics/entrega-19-imagen-3.png)
+![Comandos en package.json](./Pics/entrega-20-imagen-3.png)
