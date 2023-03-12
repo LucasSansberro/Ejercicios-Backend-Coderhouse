@@ -22,3 +22,4 @@ En este repositorio subiré los ejercicios del curso de Backend en Coderhouse. L
 - 17 - [Deploy del proyecto en la nube](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-17)
 - 18 - [Tercera entrega proyecto final - Ecommerce con MongoAtlas, usuarios, Twilio & Nodemailer](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-18)
 - 19 - [Arquitectura de capas](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-19)
+- 20 - [Persistencia a través del patrón factory](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-20)
