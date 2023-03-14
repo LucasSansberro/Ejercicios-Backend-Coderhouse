@@ -1,15 +1,16 @@
 import { mongoose, connect } from "mongoose";
 import { errorLogger } from "../Config/logger.config.js";
+import ENV from "../Config/env.config.js";
 
 mongoose.set("strictQuery", false);
-const mongoURL = process.env.URLMONGO;
+const mongoURL = ENV.MONGOURL
 
 try {
   connect(mongoURL, { useNewUrlParser: true });
   console.log("Conectado a Mongo!");
 } catch {
   errorLogger.log("error", {
-    mensaje: "There was an error accessing the Database in connectMG() inside containerChat.js",
+    mensaje: "There was an error accessing the Database in connectMG() inside mongoDAO.js",
   });
 }
 
@@ -25,7 +26,7 @@ export default class ContenedorMongo {
       return id._id;
     } catch {
       return errorLogger.log("error", {
-        mensaje: `Error while trying to save(${objeto}) in containerChat`,
+        mensaje: `Error while trying to save(${objeto}) in mongoDAO`,
       });
     }
   }
@@ -40,7 +41,7 @@ export default class ContenedorMongo {
       return "Object updated";
     } catch {
       return errorLogger.log("error", {
-        mensaje: `Error while trying to editById(${id}, ${objeto}) in containerChat`,
+        mensaje: `Error while trying to editById(${id}, ${objeto}) in mongoDAO`,
       });
     }
   }
@@ -50,7 +51,7 @@ export default class ContenedorMongo {
       return data;
     } catch {
       return errorLogger.log("error", {
-        mensaje: `Error while trying to getById(${id}) in containerChat`,
+        mensaje: `Error while trying to getById(${id}) in mongoDAO`,
       });
     }
   }
@@ -60,7 +61,7 @@ export default class ContenedorMongo {
       return data;
     } catch {
       return errorLogger.log("error", {
-        mensaje: "Error while trying to getAll() in containerChat",
+        mensaje: "Error while trying to getAll() in mongoDAO",
       });
     }
   }
@@ -70,7 +71,7 @@ export default class ContenedorMongo {
       return "Object deleted";
     } catch {
       return errorLogger.log("error", {
-        mensaje: `Error while trying to deleteById(${id}) in containerChat`,
+        mensaje: `Error while trying to deleteById(${id}) in mongoDAO`,
       });
     }
   }
@@ -80,7 +81,7 @@ export default class ContenedorMongo {
       return "Objects deleted";
     } catch {
       return errorLogger.log("error", {
-        mensaje: `Error while trying to deleteAll() in containerChat`,
+        mensaje: `Error while trying to deleteAll() in mongoDAO`,
       });
     }
   }

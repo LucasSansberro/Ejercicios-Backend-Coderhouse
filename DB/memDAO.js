@@ -6,7 +6,6 @@ export default class ContenedorMem {
   }
   async save(objeto) {
     try {
-      console.log("Hola");
       const lastId = this.array[this.array.length - 1]._id + 1;
       const objetoFinal = { ...objeto, _id: lastId };
       this.array.push(objetoFinal);
