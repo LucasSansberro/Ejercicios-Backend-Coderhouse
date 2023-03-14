@@ -1,7 +1,7 @@
-# Entrega 20
+# Entrega 21
 
-![Ejercicio redactado](./Pics/entrega-20-imagen-1.png)
+![Ejercicio redactado](./Pics/entrega-21-imagen-1.png)
 
-![Factory.js](./Pics/entrega-20-imagen-2.png)
+![Ejercicio redactado](./Pics/entrega-21-imagen-2.png)
 
-![Comandos en package.json](./Pics/entrega-20-imagen-3.png)
+![Resultados del test](./Pics/entrega-21-imagen-3.png)
