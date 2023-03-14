@@ -1,4 +1,3 @@
-import "dotenv/config.js";
 import express from "express";
 import compression from "compression";
 import http from "http";
@@ -8,6 +7,7 @@ import MongoStore from "connect-mongo";
 import session from "express-session";
 import passport from "passport";
 import { engine } from "express-handlebars";
+import ENV from "./env.config.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const mongoURL = process.env.URLMONGO;
+const mongoURL = ENV.MONGOURL
 app.use(
   session({
     store: MongoStore.create({

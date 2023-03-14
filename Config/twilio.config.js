@@ -1,7 +1,7 @@
 import twilio from "twilio";
-
+import  ENV from "./env.config.js";
 const accountSid = "AC2cf0b6aec061eafa733fdde59eff39ea";
-const authToken = process.env.AUTHTOKEN;
+const authToken = ENV.AUTHTOKEN;
 const client = twilio(accountSid, authToken);
 
 const sendPhoneMsg = async (num) => {
