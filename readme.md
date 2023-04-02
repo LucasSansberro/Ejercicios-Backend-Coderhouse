@@ -25,3 +25,4 @@ En este repositorio subiré los ejercicios del curso de Backend en Coderhouse. L
 - 20 - [Persistencia a través del patrón factory](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-20)
 - 21 - [Testeo con Mocha](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-21)
 - 22 - [GraphQL](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-22)
+- 23 - [Nest](https://github.com/LucasSansberro/Ejercicios-Backend-Coderhouse/tree/entrega-23)
