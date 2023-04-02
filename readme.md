@@ -1,3 +1,5 @@
-# Entrega 23
+# Entrega 24
 
-## CRUD en Nest
+## CRUD en Deno
+
+Correr deno run --allow-read --allow-net src/server.ts.
