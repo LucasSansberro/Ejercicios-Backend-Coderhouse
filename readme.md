@@ -2,9 +2,11 @@
 
 ## CRUD en Deno
 
-Correr deno run --allow-read --allow-net src/server.ts.
+### Correr deno run --allow-read --allow-net src/server.ts
 
-``` Para postman usar:
+### Para Postman usar
+
+```console
 
 Get <http://localhost:8000/api/products> GetAll
 
