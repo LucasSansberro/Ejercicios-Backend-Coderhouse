@@ -39,7 +39,7 @@ let productosArray = [
 ];
 let carrito = [
   {
-    id: 1,
+    _id: 1,
     productos: [
       {
         title: "Leche",
@@ -49,7 +49,7 @@ let carrito = [
         stock: 10,
         thumbnail: "https://www.laserenisima.com.ar/images/productos/grandesachet3.png",
         timestamp: "21/11/2022, 21:50:10",
-        id: 1,
+        _id: 1,
       },
       {
         title: "Manteca",
@@ -79,7 +79,7 @@ let carrito = [
 let modo = process.argv[2];
 if (modo == "mongo") {
   DAO = { carrito: new ContenedorMongo(Carrito), productos: new ContenedorMongo(Productos) };
-} else if (modo == "mem") {
+} else if (modo == "dev") {
   DAO = { carrito: new ContenedorMem(carrito), productos: new ContenedorMem(productosArray) };
 } else {
   throw "Es necesario indicar el tipo de persistencia"

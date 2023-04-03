@@ -1,5 +1,5 @@
 import createNProducts from "../Config/faker.config.js";
-import DAO from "../DB/factory.js"
+import DAO from "../DB/factory.js";
 const getAllProducts = async () => {
   const allProducts = DAO.productos.getAll();
   return allProducts;
@@ -22,7 +22,14 @@ const postProductService = (req) => {
     thumbnail,
     timestamp,
   });
- 
+};
+
+const putProductService = (id, body) => {
+  DAO.productos.editById(id, body);
+};
+
+const deleteProductsService = (id) => {
+  DAO.productos.deleteById(id);
 };
 
 const getProductosRandomService = async () => {
@@ -36,4 +43,11 @@ const postProductosRandomService = async () => {
   productsArray.forEach((product) => DAO.productos.save(product));
 };
 
-export { getAllProducts, postProductService, getProductosRandomService, postProductosRandomService };
+export {
+  getAllProducts,
+  postProductService,
+  putProductService,
+  deleteProductsService,
+  getProductosRandomService,
+  postProductosRandomService,
+};

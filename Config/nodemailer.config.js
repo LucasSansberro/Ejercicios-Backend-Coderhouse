@@ -29,8 +29,8 @@ const sendMail = async (usuario) => {
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    warnLogger.info(info);
+    await transporter.sendMail(mailOptions);
+    warnLogger.info("Usuario nuevo creado. Correo envíado");
   } catch (err) {
     errorLogger.log("error", {
       mensaje: "Error in nodemailer sendMail",
@@ -54,8 +54,8 @@ const sendCartMail = async (user, carrito) => {
     html: `<h1>Carrito </h1>: ${arrayItems}`,
   };
   try {
-    const info = await transporter.sendMail(mailOptions);
-    warnLogger.info(info);
+    await transporter.sendMail(mailOptions);
+    warnLogger.info("Nueva compra realizada. Correo envíado");
   } catch (err) {
     errorLogger.log("error", {
       mensaje: "Error in nodemailer sendCartMail",

@@ -9,3 +9,8 @@
 {"level":"error","mensaje":"Error while trying to save([object Object]) in memDAO"}
 {"level":"error","mensaje":"Error while trying to save([object Object]) in memDAO"}
 {"level":"error","mensaje":"Error while trying to save([object Object]) in memDAO"}
+{"level":"error","mensaje":"Error while trying to deleteById([object Object]) in containerChat"}
+{"level":"error","mensaje":"Error while trying to deleteById([object Object]) in containerChat"}
+{"level":"error","mensaje":"Error while trying to deleteById([object Object]) in mongoDAO"}
+{"level":"error","mensaje":"Error in nodemailer sendCartMail"}
+{"level":"error","mensaje":"Error in nodemailer sendCartMail"}

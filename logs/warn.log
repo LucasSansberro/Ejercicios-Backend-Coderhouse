@@ -101,3 +101,4 @@
 {"level":"warn","message":{"metodo":"GET","path":"/api/productos"}}
 {"level":"warn","message":{"metodo":"GET","path":"/api/productos/random"}}
 {"level":"warn","message":{"metodo":"GET","path":"/api/usuarios/login"}}
+{"level":"warn","message":"Invalid Password"}

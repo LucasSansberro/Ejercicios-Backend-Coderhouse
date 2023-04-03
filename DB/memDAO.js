@@ -17,8 +17,8 @@ export default class ContenedorMem {
   }
   async editById(id, objeto) {
     try {
-      const originalItem = this.array.find((item) => item.id == id);
-      this.array[this.array.indexOf(originalItem)] = objeto;
+      const originalItem = this.array.find((item) => item._id == id);
+      this.array[this.array.indexOf(originalItem)] = {...objeto, _id:id};
       return "Object updated";
     } catch {
       return errorLogger.log("error", {
@@ -28,7 +28,7 @@ export default class ContenedorMem {
   }
   async getById(id) {
     try {
-      return this.array.find((item) => item.id == id);
+      return this.array.find((item) => item._id == id);
     } catch {
       return errorLogger.log("error", {
         mensaje: `Error while trying to getById(${id}) in memDAO`,
@@ -46,7 +46,7 @@ export default class ContenedorMem {
   }
   async deleteById(id) {
     try {
-      this.array = this.array.filter((item) => item.id != id);
+      this.array = this.array.filter((item) => item._id != id);
       return "Object deleted";
     } catch {
       return errorLogger.log("error", {

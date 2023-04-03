@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon expressServer.js mongo",
-    "mem": "nodemon expressServer.js mem",
+    "dev": "nodemon expressServer.js dev",
     "mongo": "nodemon expressServer.js mongo"
   },
   "dependencies": {
