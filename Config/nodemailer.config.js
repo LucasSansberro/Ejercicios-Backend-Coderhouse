@@ -1,20 +1,20 @@
 import { createTransport } from "nodemailer";
-
-const TEST_MAIL = "garry.kohler62@ethereal.email";
+import ENV from "./env.config.js";
+import { errorLogger, warnLogger } from "./logger.config.js";
 
 const transporter = createTransport({
   host: "smtp.ethereal.email",
   port: 587,
   auth: {
-    user: TEST_MAIL,
-    pass: "8Gr8jBhKNJJSkXGZBc",
+    user: ENV.NODEMAILER_MAIL,
+    pass: ENV.NODEMAILER_PASS,
   },
 });
 
 const sendMail = async (usuario) => {
   const mailOptions = {
     from: "Servidor Node.js",
-    to: TEST_MAIL,
+    to: ENV.NODEMAILER_MAIL,
     subject: "Nuevo registro",
     html: `
     <h1>Nuevo usuario </h1>
@@ -30,9 +30,11 @@ const sendMail = async (usuario) => {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log(info);
+    warnLogger.info(info);
   } catch (err) {
-    console.log(err);
+    errorLogger.log("error", {
+      mensaje: "Error in nodemailer sendMail",
+    });
   }
 };
 
@@ -47,15 +49,17 @@ const sendCartMail = async (user, carrito) => {
   });
   const mailOptions = {
     from: "Servidor Node.js",
-    to: TEST_MAIL,
+    to: ENV.NODEMAILER_MAIL,
     subject: `Nuevo pedido de ${user}`,
     html: `<h1>Carrito </h1>: ${arrayItems}`,
   };
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log(info);
+    warnLogger.info(info);
   } catch (err) {
-    console.log(err);
+    errorLogger.log("error", {
+      mensaje: "Error in nodemailer sendCartMail",
+    });
   }
 };
 

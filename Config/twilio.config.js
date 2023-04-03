@@ -1,7 +1,9 @@
 import twilio from "twilio";
+import ENV from "./env.config.js";
+import { errorLogger, warnLogger } from "./logger.config.js";
 
-const accountSid = "AC2cf0b6aec061eafa733fdde59eff39ea";
-const authToken = process.env.AUTHTOKEN;
+const accountSid = ENV.TWILIO_ACCOUNTSID;
+const authToken = ENV.TWILIO_AUTHTOKEN;
 const client = twilio(accountSid, authToken);
 
 const sendPhoneMsg = async (num) => {
@@ -11,9 +13,9 @@ const sendPhoneMsg = async (num) => {
       from: "+12708175580",
       to: `+${num}`,
     });
-    console.log(message);
+    warnLogger.info(message);
   } catch (error) {
-    console.log(error);
+    errorLogger.log(error);
   }
 };
 
@@ -24,9 +26,9 @@ const sendWhatsAppMsg = async (body) => {
       from: "whatsapp:+14155238886",
       to: "whatsapp:+5491168793593",
     });
-    console.log(message);
+    warnLogger.info(message);
   } catch (error) {
-    console.log(error);
+    errorLogger.log(error);
   }
 };
 

@@ -1,4 +1,3 @@
-import "dotenv/config.js";
 import express from "express";
 import compression from "compression";
 import http from "http";
@@ -8,7 +7,10 @@ import MongoStore from "connect-mongo";
 import session from "express-session";
 import passport from "passport";
 import { engine } from "express-handlebars";
+import ENV from "./env.config.js";
+import "../DB/mongoDAO.js";
 
+//Initial server config
 const app = express();
 const httpServer = http.createServer(app);
 app.use(express.json());
@@ -19,7 +21,8 @@ app.use((req, res, next) => {
   next();
 });
 
-const mongoURL = process.env.URLMONGO;
+// Mongo session config and passport initialize
+const mongoURL = ENV.MONGOURL;
 app.use(
   session({
     store: MongoStore.create({
@@ -41,6 +44,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Handlebars config
 import { fileURLToPath } from "url";
 import path from "path";
 
@@ -59,14 +63,15 @@ app.engine(
   })
 );
 
-import {Server} from "socket.io";
+//Socket.io config
+import { Server } from "socket.io";
 import normalizeChat from "./normalizr.config.js";
 import Contenedor from "../DB/mongoDAO.js";
 import Productos from "../Models/Productos.js";
-import Chat from "../Models/Chat.js"
+import Chat from "../Models/Chat.js";
 
 const productos = new Contenedor(Productos);
-const chatLog = new Contenedor(Chat)
+const chatLog = new Contenedor(Chat);
 const io = new Server(httpServer);
 
 io.on("connection", async (socket) => {

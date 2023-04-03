@@ -1,4 +1,4 @@
-# Entrega 20
+# Entrega final
 
 ![Ejercicio redactado](./Pics/entrega-20-imagen-1.png)
 

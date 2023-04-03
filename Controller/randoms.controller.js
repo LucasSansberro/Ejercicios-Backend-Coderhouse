@@ -13,7 +13,7 @@ const getRandomInfoController = (req, res) => {
 };
 
 const getRandomNumbersController = (req, res) => {
-  getRandomNumbersService(req);
+  const {msg, arrayRepeatedResult} = getRandomNumbersService(req);
   res.json({
     Numeros_generados:
       "Usted ha generado " +

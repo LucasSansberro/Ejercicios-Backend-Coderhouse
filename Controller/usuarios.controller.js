@@ -1,5 +1,6 @@
 import { getInfoUser, getAllInfoUser } from "../Services/usuarios.service.js";
 
+//Middleware with a function provided by Passport
 const userAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();

@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
 import Usuarios from "../Models/Usuarios.js";
+import { errorLogger, warnLogger } from "./logger.config.js";
 
 const isValidPassword = (user, password) => {
   return bcrypt.compareSync(password, user.password);
@@ -18,12 +19,12 @@ passport.use(
       if (err) return done(err);
 
       if (!user) {
-        console.log("User Not Found with username " + username);
+        warnLogger.warn("User Not Found with username " + username);
         return done(null, false);
       }
 
       if (!isValidPassword(user, password)) {
-        console.log("Invalid Password");
+        warnLogger.warn("Invalid Password");
         return done(null, false);
       }
 
@@ -41,15 +42,16 @@ passport.use(
     (req, username, password, done) => {
       Usuarios.findOne({ username: username }, async function (err, user) {
         if (err) {
-          console.log("Error in SignUp: " + err);
+          warnLogger.warn("Error in SignUp: " + err);
           return done(err);
         }
 
         if (user) {
-          console.log("User already exists");
+          warnLogger.info("User already exists");
           return done(null, false);
         }
 
+        //We create a shopping cart in the DB and we link its ID to the user data
         let timestamp = new Date().toLocaleString();
         const idNumber = await carrito.save({
           timestamp,
@@ -69,11 +71,11 @@ passport.use(
         sendMail(newUser);
         Usuarios.create(newUser, (err, userWithId) => {
           if (err) {
-            console.log("Error in Saving user: " + err);
+            errorLogger.log("Error in Saving user: " + err);
             return done(err);
           }
-          console.log(user);
-          console.log("User Registration succesful");
+          warnLogger.info(user);
+          warnLogger.info("User Registration succesful");
           return done(null, userWithId);
         });
       });

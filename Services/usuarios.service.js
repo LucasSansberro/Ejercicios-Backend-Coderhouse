@@ -1,4 +1,4 @@
-import DAO from "../DB/factory.js"
+import DAO from "../DB/factory.js";
 
 const getInfoUser = (req) => {
   const { username, password } = req.user;
@@ -8,14 +8,14 @@ const getInfoUser = (req) => {
 
 const getAllInfoUser = async (req) => {
   const carrito_usuario = await DAO.carrito.getById(req.user.carrito_id);
-  let productosCarrito
-  if (carrito_usuario != null){
+  let productosCarrito;
+  if (carrito_usuario != null) {
     productosCarrito = carrito_usuario.productos;
   } else {
-    productosCarrito = await DAO.carrito.getById(1)
-    productosCarrito = productosCarrito.productos
+    //In case we run the server in dev mode, we search for a mocked cart, for testing purposes
+    const carritoMock = await DAO.carrito.getById(1);
+    productosCarrito = carritoMock.productos;
   }
-// TODO Cambiar esto que está desprolijo
 
   const id = req.user._id.toHexString();
   const { username, nombre, direccion, edad, telefono, avatar } = req.user;
