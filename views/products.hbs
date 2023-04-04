@@ -17,10 +17,10 @@
                         <button class="btn btn-primary w-100">Agregar al carrito</button>
                     </form>
                     {{!-- As form doesn't accept delete and put method, i've created a script below --}}
-                        <button class="btn btn-danger w-100" onclick="deleteProduct('{{this._id}}')">
+                        <button class="btn btn-danger w-100" onclick="deleteProduct('{{this.fetchURL}}','{{this._id}}')">
                           Eliminar producto
                         </button>
-                        <button class="btn btn-secondary w-100" onclick="editProduct('{{this.title}}',
+                        <button class="btn btn-secondary w-100" onclick="editProduct('{{this.fetchURL}}','{{this.title}}',
                         '{{this.description}}','{{this.code}}','{{this.price}}','{{this.stock}}',
                          '{{this.thumbnail}}', '{{this._id}}')">Editar producto</button>
                 </div>   
@@ -33,7 +33,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      function editProduct (title, description, code, price, stock, thumbnail, id){
+      function editProduct (url,title, description, code, price, stock, thumbnail, id){
         Swal.fire({
           title: "Editar producto",
           html: `
@@ -78,7 +78,7 @@
               thumbnail: result.value.thumbnail,
               id
             };
-            fetch(`http://localhost:8080/api/productos` + `/${id}`, {
+            fetch(`${url}/api/productos/${id}`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(updatedValues),
@@ -94,8 +94,9 @@
           })
         });
       };
-      function deleteProduct(id){
-        fetch(`http://localhost:8080/api/productos` + `/${id}`,{
+
+      function deleteProduct(url, id){
+        fetch(`${url}/api/productos/${id}`,{
           method:"DELETE"
         })
         location.reload()

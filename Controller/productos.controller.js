@@ -9,7 +9,8 @@ import {
 
 const getProductosController = async (req, res) => {
   const allProducts = await getAllProducts();
-  res.render("products", { products: allProducts, productsExist: true });
+  const fetchURL = req.protocol+"://"+req.headers.host
+  res.render("products", { products: allProducts, productsExist: true, fetchURL });
 };
 
 const postProductosController = (req, res) => {

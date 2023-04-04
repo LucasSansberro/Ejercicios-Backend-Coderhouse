@@ -3,6 +3,9 @@ import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
 import Usuarios from "../Models/Usuarios.js";
 import { errorLogger, warnLogger } from "./logger.config.js";
+import ContenedorMongo from "../DB/mongoDAO.js";
+import Carrito from "../Models/Carrito.js";
+import {sendMail} from "./nodemailer.config.js"
 
 const isValidPassword = (user, password) => {
   return bcrypt.compareSync(password, user.password);
@@ -11,6 +14,8 @@ const isValidPassword = (user, password) => {
 const createHash = (password) => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 };
+
+const carritoMongoCreator = new ContenedorMongo(Carrito);
 
 passport.use(
   "login",
@@ -53,7 +58,7 @@ passport.use(
 
         //We create a shopping cart in the DB and we link its ID to the user data
         let timestamp = new Date().toLocaleString();
-        const idNumber = await carrito.save({
+        const idNumber = await carritoMongoCreator.save({
           timestamp,
           productos: [],
         });
@@ -74,7 +79,6 @@ passport.use(
             errorLogger.log("Error in Saving user: " + err);
             return done(err);
           }
-          warnLogger.info(user);
           warnLogger.info("User Registration succesful");
           return done(null, userWithId);
         });

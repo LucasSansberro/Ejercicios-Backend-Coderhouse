@@ -18,7 +18,7 @@
   {{#each productosCarrito}}
   <div class="d-flex mb-3 ">
   <p class="bg bg-info p-3">Producto: {{this.title}} / Precio: ${{this.price}}</p>
-  <button class="btn btn-primary h-75 ms-2" onclick="deleteProductCarrito('{{this._id}}')">Borrar</button>
+  <button class="btn btn-primary h-75 ms-2" onclick="deleteProductCarrito('{{this.fetchURL}}','{{this._id}}')">Borrar</button>
   </div>
   {{/each}}
   <form action="/api/carrito" method="post">   
@@ -34,8 +34,8 @@
 <br/>
 
 <script>
-  function deleteProductCarrito(id){
-    fetch(`http://localhost:8080/api/carrito/producto` + `/${id}`,{
+  function deleteProductCarrito(url ,id){
+    fetch(`${url}/api/carrito/producto/${id}`,{
           method:"DELETE"
         }).then(()=>location.reload() )
         

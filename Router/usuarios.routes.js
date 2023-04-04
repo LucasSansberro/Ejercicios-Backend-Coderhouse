@@ -29,7 +29,7 @@ routerUsuarios.get("/login", getLoginController);
 routerUsuarios.post(
   "/login",
   upload.single("thumbnail"),
-  passport.authenticate("login", { failureRedirect: "/loginErrorAuth" }),
+  passport.authenticate("login", { failureRedirect: "/api/usuarios/loginErrorAuth" }),
   postLoginController
 );
 routerUsuarios.get("/loginError", getLoginErrorController);

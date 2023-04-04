@@ -10,7 +10,6 @@ const PORT = ENV.PORT;
 const server = httpServer.listen(PORT, () => {
   warnLogger.info(`Servidor http escuchando en el puerto ${PORT}`);
 });
-
 server.on("Error", (error) => errorLogger.log(`Error en servidor ${error}`));
 
 app.use("/api/usuarios", routerUsuarios);

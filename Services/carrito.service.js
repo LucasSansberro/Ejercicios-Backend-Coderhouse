@@ -48,5 +48,3 @@ const deleteProductoCarritoService = async (id, carritoId) => {
 };
 
 export { postCarritoService, postProductoCarritoService, deleteProductoCarritoService };
-
-//TODO Hacer passport local para correr en dev mode

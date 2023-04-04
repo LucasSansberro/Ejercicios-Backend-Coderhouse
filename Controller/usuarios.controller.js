@@ -51,7 +51,8 @@ const getLoginErrorAuthController = (req, res) => {
 
 const getInfoController = async (req, res) => {
   const { user, productosCarrito } = await getAllInfoUser(req);
-  res.render("user-info", { user, productosCarrito });
+  const fetchURL = req.protocol+"://"+req.headers.host
+  res.render("user-info", { user, productosCarrito, fetchURL });
 };
 
 const getLogoutController = (req, res, next) => {
