@@ -57,6 +57,11 @@ passport.use(
         }
 
         //We create a shopping cart in the DB and we link its ID to the user data
+        //Aclaración más personal. En este caso me hubiese encantado hacer un passport local en memoria para el modo dev,
+        //en lugar de usar siempre el de mongo atlas, pero por más que intenté varias veces, no pude hacerlo sin tener
+        //que cambiar muchísima configuración, y siento que no vale la pena el tiempo invertido. Horrible porque
+        //también se saltea la arquitectura de capas, pasando directamente a la persistencia. El carrito es una de las cosas
+        //que si pudiese empezar el proyecto de cero, haría de forma distinta
         let timestamp = new Date().toLocaleString();
         const idNumber = await carritoMongoCreator.save({
           timestamp,
