@@ -1,9 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "start": "nodemon expressServer.js mongo",
-    "dev": "nodemon expressServer.js dev",
-    "mongo": "nodemon expressServer.js mongo"
+    "start": "nodemon expressServer.js"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

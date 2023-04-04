@@ -8,7 +8,7 @@ import { errorLogger, warnLogger } from "./Config/logger.config.js";
 
 const PORT = ENV.PORT;
 const server = httpServer.listen(PORT, () => {
-  warnLogger.info(`Servidor http escuchando en el puerto ${PORT}`);
+  warnLogger.info(`Servidor http escuchando en el puerto ${PORT}. Modo: ${ENV.MODE}`);
 });
 server.on("Error", (error) => errorLogger.log(`Error en servidor ${error}`));
 

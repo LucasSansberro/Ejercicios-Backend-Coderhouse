@@ -2,6 +2,7 @@ import ContenedorMongo from "./mongoDAO.js";
 import ContenedorMem from "./memDAO.js";
 import Carrito from "../Models/Carrito.js";
 import Productos from "../Models/Productos.js";
+import ENV from "../Config/env.config.js"
 
 let DAO;
 let productosArray = [
@@ -76,13 +77,13 @@ let carrito = [
   },
 ];
 
-let modo = process.argv[2];
-if (modo == "mongo") {
+const modo = ENV.MODE
+if (modo == "PROD") {
   DAO = { carrito: new ContenedorMongo(Carrito), productos: new ContenedorMongo(Productos) };
-} else if (modo == "dev") {
+} else if (modo == "DEV") {
   DAO = { carrito: new ContenedorMem(carrito), productos: new ContenedorMem(productosArray) };
 } else {
   throw "Es necesario indicar el tipo de persistencia"
 }
-DAO.productos.getAll();
+
 export default DAO;
