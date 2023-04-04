@@ -4,7 +4,7 @@
 
 ### Contiene registro de usuarios, así como inicio de sesión. CRUD de productos y compra con carrito, que envía correos de confirmación, así como mensajes de texto y WhatsApp
 
-### Hosteado en Railway
+### Hosteado en Railway: [Link](https://ejercicios-backend-coderhouse-production.up.railway.app/api/productos)
 
 ### Registro de usuarios
 
@@ -13,6 +13,10 @@
 ### Detalles de usuario
 
 ![Detalles de usuario](./Pics/entrega-25-imagen-2.png)
+
+### Página de productos
+
+![Detalles de usuario](./Pics/entrega-25-imagen-7.png)
 
 ### Nodemailer, creación de usuario
 
